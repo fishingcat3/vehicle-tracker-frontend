@@ -9,15 +9,17 @@ export async function load({ fetch, params }) {
 			throw new Error('Network response was not ok');
 		}
 		const data = await response.json();
+		const vehicleDetails = data.results;
+		for (const t of vehicleDetails.trips) t.key = t.date + t.trip_id;
 		return {
-			vehicleDetails: data.results,
+			vehicleDetails,
 			vehicleMode,
 			vehicle_id
 		};
 	} catch (error) {
 		console.error('Error fetching vehicle details:', error);
 		return {
-			vehicleDetails: null, // Return null on error
+			vehicleDetails: null,
 			vehicleMode,
 			vehicle_id
 		};

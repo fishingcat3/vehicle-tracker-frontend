@@ -1,20 +1,38 @@
 <script>
 	import SkeletonTable from '$lib/components/SkeletonTable.svelte';
+	import { shortDate, shortYear } from '$lib/functions';
 	export let data;
-	let { vehicleDetails } = data;
+	let { vehicleMode, vehicle_id, vehicleDetails } = data;
 </script>
 
 <svelte:head>
-	<title>Details for {data.vehicle_id}</title>
+	<title>{vehicleMode} {vehicle_id}</title>
 </svelte:head>
 
 <div class="page-container">
 	{#if vehicleDetails}
 		<div class="details-card">
-			<h1 class="vehicle-id">{vehicleDetails.realtime.vehicle_id}</h1>
+			<h1 class="vehicle-id">
+				{vehicleDetails.realtime.vehicle_id} (<a href="/{vehicleMode}" class="back">{vehicleMode}</a
+				>)
+			</h1>
 			<p><strong>Model:</strong> {vehicleDetails.realtime.model}</p>
-			<p><strong>Destination:</strong> {vehicleDetails.realtime.trip.destination}</p>
-			<p><strong>Current Location:</strong> {vehicleDetails.realtime.position.stop_name}</p>
+			<p>
+				<strong>Route:</strong>
+				{vehicleDetails.realtime.route_id} to {vehicleDetails.realtime.trip.destination}
+			</p>
+			<p><strong>Last Location:</strong> {vehicleDetails.realtime.position.stop_name}</p>
+			<p>
+				<strong>Coordinates:</strong>
+				{vehicleDetails.realtime.position.lat.toFixed(5)}, {vehicleDetails.realtime.position.lng.toFixed(
+					5
+				)}
+			</p>
+			<p>
+				<strong>Speed:</strong>
+				{vehicleDetails.realtime.position.speed.toFixed(2)} km/h
+			</p>
+			<p><strong>Last Seen:</strong> {shortDate(vehicleDetails.realtime.timestamp * 1000)}</p>
 		</div>
 
 		<h2 class="history-title">Trip History</h2>
@@ -24,37 +42,46 @@
 					<tr>
 						<th>Date</th>
 						<th>Start Time</th>
-						<th>Destination</th>
-						<th>Route ID</th>
+						{#if vehicleMode === 'lightrailcbdandsoutheast'}
+							<th>Coupled</th>
+						{/if}
+						<th>Route</th>
+						<th>First & Last Seen</th>
 					</tr>
 				</thead>
 				<tbody>
-					{#each vehicleDetails.trips as trip (trip.trip_id)}
+					{#each vehicleDetails.trips as trip (trip.key)}
 						<tr>
-							<td>{trip.date}</td>
+							<td>{shortYear(trip.date)}</td>
 							<td>{trip.start_time}</td>
-							<td>{trip.destination}</td>
-							<td>{trip.route_id}</td>
+							{#if vehicleMode === 'lightrailcbdandsoutheast'}
+								<td
+									>{(trip.vehicle_id === vehicleDetails.realtime.vehicle_id
+										? trip.coupled_vehicle_id
+										: trip.vehicle_id) || 'N/A'}</td
+								>
+							{/if}
+							<td>{trip.route_id} to {trip.destination}</td>
+							<td>{shortDate(trip.first_seen * 1000)}<br />{shortDate(trip.last_seen * 1000)}</td>
 						</tr>
 					{/each}
 				</tbody>
 			</table>
 		</div>
 	{:else}
-		<!-- This part will show if load() returned null -->
 		<div class="details-card">
 			<h1 class="vehicle-id">Vehicle Not Found</h1>
-			<p>Could not retrieve details for vehicle ID {data.vehicle_id}.</p>
+			<p>Could not retrieve details for vehicle ID {vehicle_id} ({vehicleMode})</p>
 		</div>
 	{/if}
 </div>
 
 <style>
 	.details-card {
-		background-color: white;
+		background-color: var(--background-secondary);
 		padding: 2rem;
 		border-radius: 8px;
-		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+		box-shadow: 0 4px 6px var(--box-shadow-10);
 		margin-bottom: 2rem;
 	}
 	.vehicle-id {
@@ -77,7 +104,7 @@
 		overflow-x: auto;
 		background-color: white;
 		border-radius: 8px;
-		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+		box-shadow: 0 4px 6px var(--box-shadow-10);
 	}
 	.vehicle-table {
 		width: 100%;

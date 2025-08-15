@@ -2,9 +2,9 @@
 	import '../app.css';
 </script>
 
-<nav class="navbar">
+<nav>
 	<div class="container">
-		<a href="/" class="brand">Public Transport Vehicle History</a>
+		<a href="/">Vehicle Tracker</a>
 	</div>
 </nav>
 
@@ -13,20 +13,19 @@
 </main>
 
 <style>
-	.navbar {
-		background-color: #2c3e50;
-		color: white;
+	nav {
+		background-color: var(--background-theme);
 		padding: 1rem 2rem;
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 	}
+
 	.container {
 		max-width: 1200px;
 		margin: 0 auto;
 	}
-	.brand {
+
+	a {
 		font-size: 1.5rem;
 		font-weight: bold;
-		color: white;
-		text-decoration: none;
+		color: var(--background-secondary);
 	}
 </style>

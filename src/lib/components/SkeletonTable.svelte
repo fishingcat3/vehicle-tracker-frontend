@@ -9,7 +9,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			{#each { length: 10 } as _}
+			{#each { length: 15 } as _}
 				<tr>
 					<td><div class="line"></div></td>
 					<td><div class="line"></div></td>

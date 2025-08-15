@@ -1,34 +1,52 @@
 <script>
 	const vehicleModes = [
-		'nswtrains',
-		'metro',
-		'lightrailcbdandsoutheast',
-		'lightrailparramatta',
-		'ferriessydneyferries',
-		'ferriesmff',
-		'adelaidemetro'
+		{
+			path: 'nswtrains',
+			name: 'NSW TrainLink'
+		},
+		{
+			path: 'metro',
+			name: 'Sydney Metro'
+		},
+		{
+			path: 'lightrailcbdandsoutheast',
+			name: 'Sydney CBDSE Light Rail'
+		},
+		{
+			path: 'lightrailparramatta',
+			name: 'Parramatta Light Rail'
+		},
+		{
+			path: 'ferriessydneyferries',
+			name: 'Sydney Ferries'
+		},
+		{
+			path: 'ferriesmff',
+			name: 'Manly Fast Ferry'
+		},
+		{
+			path: 'adelaidemetro',
+			name: 'Adelaide Metro'
+		}
 	];
 </script>
 
 <svelte:head>
-	<title>Select Transport Mode</title>
+	<title>VehicleTracker</title>
 </svelte:head>
 
 <div class="page-container">
-	<h1 class="title">Select a Transport Mode</h1>
+	<h1 class="title">Select a Transit Mode</h1>
 	<div class="grid-container">
 		{#each vehicleModes as mode}
-			<a href="/{mode}" class="card">
-				<h2 class="card-title">{mode}</h2>
+			<a href="/{mode.path}" class="card">
+				<h2 class="card-title">{mode.name}</h2>
 			</a>
 		{/each}
 	</div>
 </div>
 
 <style>
-	.page-container {
-		padding: 1rem;
-	}
 	.title {
 		font-size: 2rem;
 		font-weight: bold;
@@ -36,22 +54,22 @@
 	}
 	.grid-container {
 		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+		grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
 		gap: 1.5rem;
 	}
 	.card {
-		background-color: white;
+		background-color: var(--background-secondary);
 		padding: 2rem;
 		border-radius: 8px;
-		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+		box-shadow: 0 4px 6px var(--box-shadow-10);
 		transition:
 			transform 0.2s ease-in-out,
 			box-shadow 0.2s ease-in-out;
-		text-align: center;
+		text-align: left;
 	}
 	.card:hover {
 		transform: translateY(-5px);
-		box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+		box-shadow: 0 8px 12px var(--box-shadow-15);
 	}
 	.card-title {
 		font-size: 1.25rem;

@@ -7,7 +7,7 @@
 		.filter((segment) => segment !== '')
 		.map((segment, index, array) => {
 			return {
-				name: segment.replace(/-/g, ' '),
+				name: decodeURIComponent(segment).replace(/-/g, ' '),
 				href: '/' + array.slice(0, index + 1).join('/')
 			};
 		});

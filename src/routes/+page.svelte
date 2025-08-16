@@ -66,6 +66,9 @@
 	<a href="https://www.adelaidemetro.com.au/developer-info" target="_blank"
 		>CC BY 4.0 by Adelaide Metro</a
 	>
+	<br /><br />
+
+	Visit <a href="https://fishingcat3.com" target="_blank">https://fishingcat3.com</a>
 </footer>
 
 <style>

@@ -50,8 +50,14 @@
 									{vehicle.vehicle_id}
 								</a>
 							</td>
-							{#if vehicleMode === 'lightrailcbdandsoutheast'}
-								<td>{vehicle.coupled_vehicle_id || 'N/A'}</td>
+							{#if vehicle.coupled_vehicle_id}
+								<td>
+									<a href={`/${vehicleMode}/${vehicle.coupled_vehicle_id}`}>
+										{vehicle.coupled_vehicle_id}
+									</a></td
+								>
+							{:else if vehicleMode === 'lightrailcbdandsoutheast'}
+								<td>N/A</td>
 							{/if}
 							<td>{vehicle.model}</td>
 							<td>{vehicle.route_id} to {vehicle.destination}</td>
@@ -72,28 +78,5 @@
 		font-size: 2rem;
 		font-weight: bold;
 		margin-bottom: 1.5rem;
-	}
-	.table-container {
-		overflow-x: auto;
-		background-color: var(--background-secondary);
-		border-radius: 8px;
-		box-shadow: 0 4px 6px var(--drop-shadow-10);
-	}
-	.vehicle-table {
-		width: 100%;
-		border-collapse: collapse;
-	}
-	.vehicle-table th,
-	.vehicle-table td {
-		padding: 1rem;
-		text-align: left;
-		border-bottom: 1px solid var(--background-tertiary);
-	}
-	.vehicle-table th {
-		background-color: var(--background-tertiary);
-		font-weight: 600;
-	}
-	.vehicle-table tbody tr:hover {
-		background-color: var(--background-primary);
 	}
 </style>

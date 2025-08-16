@@ -62,7 +62,11 @@
 							<td>{vehicle.model}</td>
 							<td>{vehicle.route_id} to {vehicle.destination}</td>
 							<td>{vehicle.stop_name}</td>
-							<td>{shortDate(vehicle.timestamp * 1000)}</td>
+							<td
+								class={((ts) => (ts < 300 ? 'active' : ts < 86400 ? 'semiactive' : 'inactive'))(
+									Date.now() / 1000 - vehicle.timestamp
+								)}>{shortDate(vehicle.timestamp * 1000)}</td
+							>
 						</tr>
 					{/each}
 				</tbody>
@@ -78,5 +82,14 @@
 		font-size: 2rem;
 		font-weight: bold;
 		margin-bottom: 1.5rem;
+	}
+	.active {
+		color: #39b362;
+	}
+	.semiactive {
+		color: #dba02a;
+	}
+	.inactive {
+		color: #ea2323;
 	}
 </style>

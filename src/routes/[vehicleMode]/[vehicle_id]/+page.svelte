@@ -100,7 +100,7 @@
 					{#each vehicleDetails.trips as trip (trip.key)}
 						{#if trip.dateHeader}
 							<tr class="date-header">
-								<td colspan="5">{shortYear(trip.dateHeader)}</td>
+								<td colspan="5">{trip.dateHeader}</td>
 							</tr>
 						{:else}
 							<tr>

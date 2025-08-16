@@ -57,8 +57,10 @@
 </div>
 
 <footer>
-	Licensed under <a href="https://opendata.transport.nsw.gov.au/datalicence" target="_blank"
-		>CC BY 4.0 by TfNSW</a
+	NSW TrainLink stores up to 90 days of trips and every other mode stores up to 21 days of trips<br
+	/><br />
+	Licensed under
+	<a href="https://opendata.transport.nsw.gov.au/datalicence" target="_blank">CC BY 4.0 by TfNSW</a
 	><br />
 	Licensed under
 	<a href="https://www.adelaidemetro.com.au/developer-info" target="_blank"

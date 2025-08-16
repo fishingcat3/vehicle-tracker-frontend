@@ -103,7 +103,10 @@ export async function fetchVehicleData({ loadFetch, vehicleMode, vehicle_id }) {
 		vehicleDetails.trips = [];
 		const tripEntries = Object.entries(dateGroups).sort((a, b) => b[0] - a[0]);
 		for (const [day, trips] of tripEntries) {
-			vehicleDetails.trips.push({ dateHeader: day, key: day });
+			vehicleDetails.trips.push({
+				dateHeader: `${shortYear(day)} (${trips.length} trips)`,
+				key: day
+			});
 			vehicleDetails.trips.push(...trips);
 		}
 		return {

@@ -77,10 +77,10 @@
 				</p>
 				<p><strong>Last Refresh:</strong> {shortTime(new Date())} (every 90 seconds)</p>
 				<p>
-					<strong>Days:</strong><br />{vehicleDetails.trips
+					<strong>Days:</strong><br />{@html vehicleDetails.trips
 						.filter((x) => x.dateHeader)
 						.map((x) => x.dateHeader)
-						.join('\n')}
+						.join('<br />')}
 				</p>
 			</div>
 

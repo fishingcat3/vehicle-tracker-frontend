@@ -1,10 +1,35 @@
 <script>
 	import '../app.css';
+	import { page } from '$app/stores';
+
+	$: breadcrumbs = $page.url.pathname
+		.split('/')
+		.filter((segment) => segment !== '')
+		.map((segment, index, array) => {
+			return {
+				name: segment.replace(/-/g, ' '),
+				href: '/' + array.slice(0, index + 1).join('/')
+			};
+		});
 </script>
 
-<nav>
+<nav aria-label="breadcrumb">
 	<div class="container">
-		<a href="/">Vehicle Tracker</a>
+		<ol class="breadcrumbs">
+			<li class="breadcrumb-item">
+				<a href="/">Vehicle Tracker</a>
+			</li>
+			{#each breadcrumbs as crumb}
+				<li class="breadcrumb-item breadcrumb-separator">/</li>
+				<li class="breadcrumb-item">
+					{#if crumb.href === $page.url.pathname}
+						<a href={crumb.href} aria-current="page">{crumb.name}</a>
+					{:else}
+						<a href={crumb.href}>{crumb.name}</a>
+					{/if}
+				</li>
+			{/each}
+		</ol>
 	</div>
 </nav>
 
@@ -23,9 +48,33 @@
 		margin: 0 auto;
 	}
 
-	a {
-		font-size: 1.5rem;
+	.breadcrumbs {
+		display: flex;
+		flex-wrap: wrap;
+		list-style: none;
+		margin-block-end: 0;
+		margin-block-start: 0;
+		padding-inline-start: 0;
+	}
+
+	.breadcrumb-item {
+		font-size: 1.4rem;
 		font-weight: bold;
+	}
+
+	.breadcrumb-item a {
+		color: var(--background-secondary);
+		text-decoration: none;
+		transition: color 0.2s ease-in-out;
+	}
+
+	.breadcrumb-item a:hover {
+		color: var(--background-tertiary);
+	}
+
+	.breadcrumb-separator {
+		font-weight: normal;
+		margin: 0 1rem;
 		color: var(--background-secondary);
 	}
 </style>

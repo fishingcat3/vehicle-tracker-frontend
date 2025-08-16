@@ -1,6 +1,6 @@
 import { fetchVehicleData } from '$lib/functions.js';
 
-export async function load({ fetch, params }) {
+export async function load({ fetch: loadFetch, params }) {
 	const { vehicleMode, vehicle_id } = params;
-	return fetchVehicleData(vehicleMode, vehicle_id);
+	return fetchVehicleData({ loadFetch, vehicleMode, vehicle_id });
 }

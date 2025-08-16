@@ -1,14 +1,16 @@
 <script>
 	import { onMount } from 'svelte';
 	import SkeletonTable from '$lib/components/SkeletonTable.svelte';
-	import { shortDate, shortTime, shortYear, fetchVehicleData } from '$lib/functions';
+	import { shortDate, shortTime, shortYear, secondsToHMS, fetchVehicleData } from '$lib/functions';
 	export let data;
 	let { vehicleMode, vehicle_id, vehicleDetails } = data;
 
-	onMount(() => {
+	onMount(async () => {
+		if (typeof window === 'undefined') return;
+
 		let pos = vehicleDetails.realtime.position;
 
-		let map = L.map('map').setView([pos.lat, pos.lng], 11);
+		let map = L.map('map').setView([pos.lat, pos.lng], 13);
 		L.tileLayer(
 			'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}' +
 				(L.Browser.retina ? '@2x.png' : '.png'),
@@ -29,7 +31,7 @@
 		let marker = L.marker([pos.lat, pos.lng]).addTo(map);
 
 		const interval = setInterval(async () => {
-			({ vehicleDetails } = await fetchVehicleData(vehicleMode, vehicle_id));
+			({ vehicleDetails } = await fetchVehicleData({ fetch: loadFetch, vehicleMode, vehicle_id }));
 			pos = vehicleDetails.realtime.position;
 			map.panTo([pos.lat, pos.lng], { animate: true, duration: 1.5 });
 			marker.setLatLng([pos.lat, pos.lng]);
@@ -40,43 +42,39 @@
 
 <svelte:head>
 	<title>{vehicle_id} {vehicleMode}</title>
-	<link
-		rel="stylesheet"
-		href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-		integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-		crossorigin=""
-	/>
-	<script
-		src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-		integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-		crossorigin=""
-	></script>
 </svelte:head>
 
 <div class="page-container">
 	{#if vehicleDetails}
 		<div class="details-block">
 			<div class="details-card">
-				<h1 class="vehicle-id">
-					{vehicle_id} (<a href="/{vehicleMode}" class="back">{vehicleMode}</a>)
-				</h1>
+				<h1 class="vehicle-id">{vehicle_id}</h1>
 				<p><strong>Model:</strong> {vehicleDetails.realtime.model}</p>
 				<p>
 					<strong>Route:</strong>
-					{vehicleDetails.realtime.route_id} to {vehicleDetails.realtime.trip.destination}
+					{vehicleDetails.realtime.route_id} to {vehicleDetails.realtime.trip.destination} ({vehicleDetails
+						.realtime.trip.start_time})
 				</p>
-				<p><strong>Last Location:</strong> {vehicleDetails.realtime.position.stop_name}</p>
+				<p><strong>Location:</strong> {vehicleDetails.realtime.position.stop_name}</p>
 				<p>
 					<strong>Coordinates:</strong>
-					{vehicleDetails.realtime.position.lat.toFixed(5)}, {vehicleDetails.realtime.position.lng.toFixed(
+					{vehicleDetails.realtime.position.lat.toFixed(5)}°N, {vehicleDetails.realtime.position.lng.toFixed(
 						5
-					)}
+					)}°E
+				</p>
+				<p>
+					<strong>Bearing:</strong>
+					{vehicleDetails.realtime.position.dir.toFixed(2)}°
 				</p>
 				<p>
 					<strong>Speed:</strong>
 					{vehicleDetails.realtime.position.speed.toFixed(2)} km/h
 				</p>
-				<p><strong>Last Seen:</strong> {shortDate(vehicleDetails.realtime.timestamp * 1000)}</p>
+				<p>
+					<strong>Last Seen:</strong>
+					{shortDate(vehicleDetails.realtime.timestamp * 1000)}
+					({secondsToHMS(Date.now() / 1000 - vehicleDetails.realtime.timestamp)} ago)
+				</p>
 				<p><strong>Last Refresh:</strong> {shortTime(new Date())} (every 90 seconds)</p>
 			</div>
 
@@ -146,9 +144,10 @@
 		padding: 2rem;
 		flex: 1;
 		border-radius: 8px;
+		box-shadow: 0 4px 6px var(--box-shadow-10);
 	}
 	.vehicle-id {
-		font-size: 2.5rem;
+		font-size: 2rem;
 		font-weight: bold;
 		margin-top: 0;
 		margin-bottom: 1rem;
@@ -159,8 +158,9 @@
 		margin: 0.2rem 0;
 	}
 	.history-title {
-		font-size: 2rem;
+		font-size: 1.6rem;
 		font-weight: bold;
-		margin-bottom: 1.5rem;
+		margin-top: 2rem;
+		margin-bottom: 1.2rem;
 	}
 </style>

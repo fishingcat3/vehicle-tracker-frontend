@@ -53,9 +53,30 @@ export function shortYear(dateString) {
 	return `${weekday}, ${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
 }
 
-export async function fetchVehicles(vehicleMode) {
+export function secondsToHMS(i) {
+	let s = Math.floor(Math.abs(i));
+	const w = Math.floor(s / 604800);
+	s %= 604800;
+	const d = Math.floor(s / 86400);
+	s %= 86400;
+	const h = Math.floor(s / 3600);
+	s %= 3600;
+	const m = Math.floor(s / 60);
+	s %= 60;
+
+	const parts = [];
+	if (w > 0) parts.push(`${w}w`);
+	if (d > 0) parts.push(`${d}d`);
+	if (h > 0) parts.push(`${h}h`);
+	if (m > 0) parts.push(`${m}m`);
+	if (s > 0 || parts.length === 0) parts.push(`${s}s`);
+
+	return parts.join(' ');
+}
+
+export async function fetchVehicles({ loadFetch, vehicleMode }) {
 	try {
-		const response = await fetch(
+		const response = await loadFetch(
 			`https://gtfs-r-vehicles.up.railway.app/api/realtime/${vehicleMode}`
 		);
 		if (!response.ok) throw new Error('Network response was not ok');
@@ -67,9 +88,9 @@ export async function fetchVehicles(vehicleMode) {
 	}
 }
 
-export async function fetchVehicleData(vehicleMode, vehicle_id) {
+export async function fetchVehicleData({ loadFetch, vehicleMode, vehicle_id }) {
 	try {
-		const response = await fetch(
+		const response = await loadFetch(
 			`https://gtfs-r-vehicles.up.railway.app/api/vehicle/${vehicleMode}?vehicle_id=${vehicle_id}`
 		);
 		if (!response.ok) {

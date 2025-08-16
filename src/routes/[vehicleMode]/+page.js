@@ -1,11 +1,11 @@
 import { fetchVehicles } from '$lib/functions.js';
 
-export async function load({ fetch, params }) {
+export async function load({ fetch: loadFetch, params }) {
 	const { vehicleMode } = params;
 	return {
 		vehicleMode,
 		streamed: {
-			vehicles: fetchVehicles(vehicleMode)
+			vehicles: fetchVehicles({ loadFetch, vehicleMode })
 		}
 	};
 }

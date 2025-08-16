@@ -2,31 +2,38 @@
 	const vehicleModes = [
 		{
 			path: 'nswtrains',
-			name: 'NSW TrainLink'
+			name: 'NSW TrainLink',
+			icon: 'https://upload.wikimedia.org/wikipedia/commons/e/e7/TfNSW_T.svg'
 		},
 		{
 			path: 'metro',
-			name: 'Sydney Metro'
+			name: 'Sydney Metro',
+			icon: 'https://upload.wikimedia.org/wikipedia/commons/8/89/TfNSW_M.svg'
 		},
 		{
 			path: 'lightrailcbdandsoutheast',
-			name: 'Sydney CBDSE Light Rail'
+			name: 'Sydney CBDSE Light Rail',
+			icon: 'https://upload.wikimedia.org/wikipedia/commons/4/4d/TfNSW_L.svg'
 		},
 		{
 			path: 'lightrailparramatta',
-			name: 'Parramatta Light Rail'
+			name: 'Parramatta Light Rail',
+			icon: 'https://upload.wikimedia.org/wikipedia/commons/4/4d/TfNSW_L.svg'
 		},
 		{
 			path: 'ferriessydneyferries',
-			name: 'Sydney Ferries'
+			name: 'Sydney Ferries',
+			icon: 'https://upload.wikimedia.org/wikipedia/commons/8/8f/TfNSW_F.svg'
 		},
 		{
 			path: 'ferriesmff',
-			name: 'Manly Fast Ferry'
+			name: 'Manly Fast Ferry',
+			icon: 'https://assets.myfastferry.com.au/images/2019/12/26221058/cropped-fast_ferry_icon-32x32.png'
 		},
 		{
 			path: 'adelaidemetro',
-			name: 'Adelaide Metro'
+			name: 'Adelaide Metro',
+			icon: 'https://www.adelaidemetro.com.au/__data/assets/image/0005/813623/favicon-2.png'
 		}
 	];
 </script>
@@ -40,11 +47,24 @@
 	<div class="grid-container">
 		{#each vehicleModes as mode}
 			<a href="/{mode.path}" class="card">
+				{#if mode.icon}
+					<img height="25" width="25" src={mode.icon} alt="{mode.name} Roundel" />
+				{/if}
 				<h2 class="card-title">{mode.name}</h2>
 			</a>
 		{/each}
 	</div>
 </div>
+
+<footer>
+	Licensed under <a href="https://opendata.transport.nsw.gov.au/datalicence" target="_blank"
+		>CC BY 4.0 by TfNSW</a
+	><br />
+	Licensed under
+	<a href="https://www.adelaidemetro.com.au/developer-info" target="_blank"
+		>CC BY 4.0 by Adelaide Metro</a
+	>
+</footer>
 
 <style>
 	.title {
@@ -54,18 +74,22 @@
 	}
 	.grid-container {
 		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
-		gap: 1.5rem;
+		grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+		gap: 1rem;
 	}
 	.card {
 		background-color: var(--background-secondary);
-		padding: 2rem;
+		padding: 1.5rem;
 		border-radius: 8px;
 		box-shadow: 0 4px 6px var(--box-shadow-10);
 		transition:
 			transform 0.2s ease-in-out,
 			box-shadow 0.2s ease-in-out;
 		text-align: left;
+	}
+	a {
+		display: inline-flex;
+		gap: 10px;
 	}
 	.card:hover {
 		transform: translateY(-5px);
@@ -75,5 +99,12 @@
 		font-size: 1.25rem;
 		font-weight: 600;
 		margin: 0;
+	}
+	footer {
+		background-color: var(--background-secondary);
+		padding: 1rem;
+		border-radius: 8px;
+		box-shadow: 0 4px 6px var(--box-shadow-10);
+		margin-top: 2rem;
 	}
 </style>

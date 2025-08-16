@@ -32,6 +32,12 @@ body {
 	font-size: 18px;
 }
 
+@media (max-width: 768px) {
+	body {
+		zoom: 0.9;
+	}
+}
+
 main {
 	max-width: 1200px;
 	margin: 0 auto;

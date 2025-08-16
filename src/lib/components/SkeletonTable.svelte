@@ -6,11 +6,13 @@
 				<th><div class="line"></div></th>
 				<th><div class="line"></div></th>
 				<th><div class="line"></div></th>
+				<th><div class="line"></div></th>
 			</tr>
 		</thead>
 		<tbody>
 			{#each { length: 15 } as _}
 				<tr>
+					<td><div class="line"></div></td>
 					<td><div class="line"></div></td>
 					<td><div class="line"></div></td>
 					<td><div class="line"></div></td>
@@ -48,7 +50,7 @@
 		border-bottom: 1px solid #eee;
 	}
 	.skeleton-table th {
-		background-color: #f7f7f7;
+		background-color: var(--background-quaternary);
 	}
 	.line {
 		height: 1.25rem;

@@ -93,3 +93,13 @@ a:hover {
 .leaflet-marker-icon {
 	transition: transform 1.5s ease-in-out;
 }
+
+.active {
+	color: #39b362;
+}
+.semiactive {
+	color: #dba02a;
+}
+.inactive {
+	color: #ea2323;
+}

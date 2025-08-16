@@ -70,7 +70,11 @@
 						<tr><td>Bearing</td><td>{vehicleDetails.realtime.position.dir.toFixed(2)}°</td></tr>
 						<tr><td>Speed</td><td>{vehicleDetails.realtime.position.speed.toFixed(2)} km/h</td></tr>
 						<tr
-							><td>Last Seen</td><td>
+							><td>Last Seen</td><td
+								class={((ts) => (ts < 600 ? 'active' : ts < 86400 ? 'semiactive' : 'inactive'))(
+									Date.now() / 1000 - vehicleDetails.realtime.timestamp
+								)}
+							>
 								{shortDate(vehicleDetails.realtime.timestamp * 1000)}
 								({secondsToHMS(Date.now() / 1000 - vehicleDetails.realtime.timestamp)} ago)</td
 							></tr
@@ -122,7 +126,11 @@
 									>
 								{/if}
 								<td>{trip.route_id} to {trip.destination}</td>
-								<td>{shortTime(trip.first_seen * 1000)} - {shortTime(trip.last_seen * 1000)}</td>
+								<td
+									>{shortTime(trip.first_seen * 1000)} - {shortTime(trip.last_seen * 1000)} ({secondsToHMS(
+										trip.last_seen - trip.first_seen
+									)})</td
+								>
 							</tr>{/if}
 					{/each}
 				</tbody>

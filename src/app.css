@@ -77,7 +77,6 @@ a:hover {
 }
 
 .date-header {
-	font-weight: bold;
 	font-size: 1.1rem;
 	background-color: var(--background-tertiary);
 }

@@ -28,7 +28,7 @@
 		justify-content: space-between;
 		align-items: center;
 		padding: 0.7rem;
-		background-color: var(--background-secondary);
+		background-color: var(--background-primary);
 		cursor: pointer;
 		border: 1px solid var(--background-tertiary);
 		border-radius: 8px;
@@ -40,7 +40,7 @@
 	}
 
 	.accordion-header:hover {
-		background-color: var(--background-primary);
+		background-color: var(--background-tertiary);
 	}
 
 	.accordion-header.open {

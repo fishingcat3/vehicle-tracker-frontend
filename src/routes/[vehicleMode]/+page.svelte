@@ -35,7 +35,7 @@
 </svelte:head>
 
 <div class="page-container">
-	<h1 class="title">Vehicles for {vehicleMode}</h1>
+	<h1 class="title">Vehicles for <strong>{vehicleMode}</strong></h1>
 	<p>Automatically refreshes every 90 seconds (last refreshed {secondsToHMS(elapsed)} ago)</p>
 	{#await streamed.vehicles}
 		<SkeletonTable />
@@ -92,7 +92,7 @@
 <style>
 	.title {
 		font-size: 2rem;
-		font-weight: bold;
+		font-weight: 500;
 		margin-bottom: 1.5rem;
 	}
 	.active {

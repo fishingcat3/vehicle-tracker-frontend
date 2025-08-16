@@ -60,6 +60,7 @@
 	.breadcrumb-item {
 		font-size: 1.4rem;
 		font-weight: bold;
+		letter-spacing: 0.02rem;
 	}
 
 	.breadcrumb-item a {

@@ -1,6 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import SkeletonTable from '$lib/components/SkeletonTable.svelte';
+	import Accordion from '$lib/components/Accordion.svelte';
 	import { shortDate, shortTime, shortYear, secondsToHMS, fetchVehicleData } from '$lib/functions';
 	export let data;
 	let { vehicleMode, vehicle_id, vehicleDetails } = data;
@@ -49,39 +50,41 @@
 		<div class="details-block">
 			<div class="details-card">
 				<h1 class="vehicle-id">{vehicle_id}</h1>
-				<p><strong>Model:</strong> {vehicleDetails.realtime.model}</p>
-				<p>
-					<strong>Route:</strong>
-					{vehicleDetails.realtime.route_id} to {vehicleDetails.realtime.trip.destination} ({vehicleDetails
-						.realtime.trip.start_time})
-				</p>
-				<p><strong>Location:</strong> {vehicleDetails.realtime.position.stop_name}</p>
-				<p>
-					<strong>Coordinates:</strong>
-					{vehicleDetails.realtime.position.lat.toFixed(5)}°N, {vehicleDetails.realtime.position.lng.toFixed(
-						5
-					)}°E
-				</p>
-				<p>
-					<strong>Bearing:</strong>
-					{vehicleDetails.realtime.position.dir.toFixed(2)}°
-				</p>
-				<p>
-					<strong>Speed:</strong>
-					{vehicleDetails.realtime.position.speed.toFixed(2)} km/h
-				</p>
-				<p>
-					<strong>Last Seen:</strong>
-					{shortDate(vehicleDetails.realtime.timestamp * 1000)}
-					({secondsToHMS(Date.now() / 1000 - vehicleDetails.realtime.timestamp)} ago)
-				</p>
-				<p><strong>Last Refresh:</strong> {shortTime(new Date())} (every 90 seconds)</p>
-				<p>
-					<strong>Days:</strong><br />{@html vehicleDetails.trips
+				<table class="info-table">
+					<tbody>
+						<tr><td>Model</td><td>{vehicleDetails.realtime.model}</td></tr>
+						<tr
+							><td>Route</td><td
+								>{vehicleDetails.realtime.trip.start_time}
+								{vehicleDetails.realtime.route_id} to {vehicleDetails.realtime.trip.destination}</td
+							></tr
+						>
+						<tr><td>Location</td><td>{vehicleDetails.realtime.position.stop_name}</td></tr>
+						<tr
+							><td>Coordinates</td><td
+								>{vehicleDetails.realtime.position.lat.toFixed(5)}°N, {vehicleDetails.realtime.position.lng.toFixed(
+									5
+								)}°E</td
+							></tr
+						>
+						<tr><td>Bearing</td><td>{vehicleDetails.realtime.position.dir.toFixed(2)}°</td></tr>
+						<tr><td>Speed</td><td>{vehicleDetails.realtime.position.speed.toFixed(2)} km/h</td></tr>
+						<tr
+							><td>Last Seen</td><td>
+								{shortDate(vehicleDetails.realtime.timestamp * 1000)}
+								({secondsToHMS(Date.now() / 1000 - vehicleDetails.realtime.timestamp)} ago)</td
+							></tr
+						>
+						<tr><td>Last Refresh</td><td>{shortTime(new Date())} (every 90 seconds)</td></tr>
+					</tbody>
+				</table>
+				<br />
+				<Accordion title="Day Summary"
+					>{@html vehicleDetails.trips
 						.filter((x) => x.dateHeader)
 						.map((x) => x.dateHeader)
-						.join('<br />')}
-				</p>
+						.join('<br />')}</Accordion
+				>
 			</div>
 
 			<div id="map">
@@ -134,6 +137,12 @@
 </div>
 
 <style>
+	.info-table tr td {
+		padding: 0.4rem 2rem 0 0;
+	}
+	.info-table tr td:first-child {
+		font-weight: bold;
+	}
 	.details-block {
 		display: flex;
 		flex-direction: row;
@@ -168,5 +177,14 @@
 		font-weight: bold;
 		margin-top: 2rem;
 		margin-bottom: 1.2rem;
+	}
+	@media (max-width: 768px) {
+		#map {
+			min-height: 300px;
+		}
+
+		.details-block {
+			flex-direction: column;
+		}
 	}
 </style>

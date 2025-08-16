@@ -1,11 +1,13 @@
 <script>
 	import { onMount } from 'svelte';
 	import SkeletonTable from '$lib/components/SkeletonTable.svelte';
-	import { shortDate, fetchVehicles } from '$lib/functions.js';
+	import { shortDate, fetchVehicles, secondsToHMS } from '$lib/functions.js';
 
 	export let data;
 	let { vehicleMode, streamed } = data;
 	let vehicleList = [];
+
+	let elapsed = 0;
 
 	streamed.vehicles.then((resolvedVehicles) => {
 		vehicleList = resolvedVehicles;
@@ -14,8 +16,17 @@
 	onMount(() => {
 		const interval = setInterval(async () => {
 			vehicleList = await fetchVehicles({ loadFetch: fetch, vehicleMode });
+			elapsed = 0;
 		}, 90000);
 		return () => clearInterval(interval);
+	});
+
+	onMount(() => {
+		const id = setInterval(() => {
+			elapsed += 1;
+		}, 1000);
+
+		return () => clearInterval(id);
 	});
 </script>
 
@@ -25,6 +36,7 @@
 
 <div class="page-container">
 	<h1 class="title">Vehicles for {vehicleMode}</h1>
+	<p>Automatically refreshes every 90 seconds (last refreshed {secondsToHMS(elapsed)} ago)</p>
 	{#await streamed.vehicles}
 		<SkeletonTable />
 	{:then vehicles}

@@ -71,7 +71,7 @@ export function secondsToHMS(i) {
 	if (m > 0) parts.push(`${m}m`);
 	if (s > 0 || parts.length === 0) parts.push(`${s}s`);
 
-	return parts.join(' ');
+	return parts.join('');
 }
 
 export async function fetchVehicles({ loadFetch, vehicleMode }) {
@@ -104,7 +104,7 @@ export async function fetchVehicleData({ loadFetch, vehicleMode, vehicle_id }) {
 		const tripEntries = Object.entries(dateGroups).sort((a, b) => b[0] - a[0]);
 		for (const [day, trips] of tripEntries) {
 			vehicleDetails.trips.push({
-				dateHeader: `${shortYear(day)} (${trips.length} trips)`,
+				dateHeader: `${shortYear(day)} (${trips.length} trip${trips.length === 1 ? '' : 's'}, ${secondsToHMS(trips.reduce((acc, x) => acc + x.last_seen - x.first_seen, 0))} tracked)`,
 				key: day
 			});
 			vehicleDetails.trips.push(...trips);

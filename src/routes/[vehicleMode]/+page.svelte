@@ -13,7 +13,7 @@
 
 	onMount(() => {
 		const interval = setInterval(async () => {
-			vehicleList = await fetchVehicles({ fetch: loadFetch, vehicleMode });
+			vehicleList = await fetchVehicles({ loadFetch: fetch, vehicleMode });
 		}, 90000);
 		return () => clearInterval(interval);
 	});

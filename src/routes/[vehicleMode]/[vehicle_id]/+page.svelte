@@ -31,7 +31,7 @@
 		let marker = L.marker([pos.lat, pos.lng]).addTo(map);
 
 		const interval = setInterval(async () => {
-			({ vehicleDetails } = await fetchVehicleData({ fetch: loadFetch, vehicleMode, vehicle_id }));
+			({ vehicleDetails } = await fetchVehicleData({ loadFetch: fetch, vehicleMode, vehicle_id }));
 			pos = vehicleDetails.realtime.position;
 			map.panTo([pos.lat, pos.lng], { animate: true, duration: 1.5 });
 			marker.setLatLng([pos.lat, pos.lng]);

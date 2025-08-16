@@ -76,6 +76,9 @@
 					({secondsToHMS(Date.now() / 1000 - vehicleDetails.realtime.timestamp)} ago)
 				</p>
 				<p><strong>Last Refresh:</strong> {shortTime(new Date())} (every 90 seconds)</p>
+				<p>
+					<strong>Days:</strong><br />{vehicleDetails.trips.filter((x) => x.dateHeader).join('\n')}
+				</p>
 			</div>
 
 			<div id="map">

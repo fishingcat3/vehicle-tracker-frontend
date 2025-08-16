@@ -71,7 +71,7 @@ export function secondsToHMS(i) {
 	if (m > 0) parts.push(`${m}m`);
 	if (s > 0 || parts.length === 0) parts.push(`${s}s`);
 
-	return parts.join('');
+	return parts.join(' ');
 }
 
 export async function fetchVehicles({ loadFetch, vehicleMode }) {

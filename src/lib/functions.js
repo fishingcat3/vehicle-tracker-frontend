@@ -79,7 +79,7 @@ export async function fetchVehicles({ loadFetch, vehicleMode }) {
 		const response = await loadFetch(
 			`https://gtfs-r-vehicles.up.railway.app/api/realtime/${vehicleMode}`
 		);
-		if (!response.ok) throw new Error('Network response was not ok');
+		if (!response.ok) throw new Error('Network response was not OK');
 		const data = await response.json();
 		return (data.results || []).sort((a, b) => a.vehicle_id.localeCompare(b.vehicle_id));
 	} catch (error) {
@@ -94,7 +94,7 @@ export async function fetchVehicleData({ loadFetch, vehicleMode, vehicle_id }) {
 			`https://gtfs-r-vehicles.up.railway.app/api/vehicle/${vehicleMode}?vehicle_id=${vehicle_id}`
 		);
 		if (!response.ok) {
-			throw new Error('Network response was not ok');
+			throw new Error('Network response was not OK');
 		}
 		const data = await response.json();
 		const vehicleDetails = data.results;

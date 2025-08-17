@@ -43,7 +43,7 @@
 		padding: 1rem 2rem;
 		top: 0;
 		position: sticky;
-		z-index: 999;
+		z-index: 99999;
 	}
 
 	.container {

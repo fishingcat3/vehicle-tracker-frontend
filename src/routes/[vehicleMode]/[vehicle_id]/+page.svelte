@@ -59,7 +59,7 @@
 								{vehicleDetails.realtime.route_id}
 								{#if vehicleDetails.realtime.trip.origin}
 									<br />
-									{vehicleDetails.realtime.trip.destination} to {vehicleDetails.realtime.trip
+									{vehicleDetails.realtime.trip.origin} to {vehicleDetails.realtime.trip
 										.destination}
 								{:else}
 									to {vehicleDetails.realtime.trip.destination}{/if}

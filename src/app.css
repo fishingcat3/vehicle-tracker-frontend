@@ -68,7 +68,7 @@ a:hover {
 
 .vehicle-table th,
 .vehicle-table td {
-	padding: 0.6rem;
+	padding: 0.5rem;
 	text-align: left;
 	border-bottom: 1px solid var(--background-tertiary);
 }

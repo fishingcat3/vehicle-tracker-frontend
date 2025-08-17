@@ -41,6 +41,8 @@
 	nav {
 		background-color: var(--background-theme);
 		padding: 1rem 2rem;
+		top: 0;
+		position: sticky;
 	}
 
 	.container {

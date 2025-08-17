@@ -55,8 +55,10 @@
 						<tr><td>Model:</td><td>{vehicleDetails.realtime.model}</td></tr>
 						<tr
 							><td>Route:</td><td>
-								{vehicleDetails.realtime.trip.start_time}
-								{vehicleDetails.realtime.route_id}
+								{vehicleDetails.realtime.route_id} ({vehicleDetails.realtime.trip.start_time.slice(
+									0,
+									-3
+								)})
 								{#if vehicleDetails.realtime.trip.origin}
 									<br />
 									{vehicleDetails.realtime.trip.origin} to {vehicleDetails.realtime.trip

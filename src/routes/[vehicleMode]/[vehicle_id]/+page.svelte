@@ -163,6 +163,7 @@
 	.info-table tr td:first-child {
 		font-weight: bold;
 		text-align: right;
+		white-space: nowrap;
 	}
 	.details-block {
 		display: flex;

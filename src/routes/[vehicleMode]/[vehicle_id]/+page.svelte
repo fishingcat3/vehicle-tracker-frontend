@@ -50,16 +50,22 @@
 		<div class="details-block">
 			<div class="details-card">
 				<h1 class="vehicle-id">{vehicle_id}</h1>
-				<table class="info-table">
+				<table class="info-table table-container">
 					<tbody>
 						<tr><td>Model</td><td>{vehicleDetails.realtime.model}</td></tr>
 						<tr
-							><td>Route</td><td
-								>{vehicleDetails.realtime.trip.start_time}
-								{vehicleDetails.realtime.route_id} to {vehicleDetails.realtime.trip.destination}</td
-							></tr
+							><td>Route</td><td>
+								{vehicleDetails.realtime.trip.start_time}
+								{vehicleDetails.realtime.route_id}
+								{#if vehicleDetails.realtime.trip.origin}
+									<br />
+									{vehicleDetails.realtime.trip.destination} to {vehicleDetails.realtime.trip
+										.destination}
+								{:else}
+									to {vehicleDetails.realtime.trip.destination}{/if}
+							</td></tr
 						>
-						<tr><td>Location</td><td>{vehicleDetails.realtime.position.stop_name}</td></tr>
+						<tr><td>Last Stop</td><td>{vehicleDetails.realtime.position.stop_name}</td></tr>
 						<tr
 							><td>Coordinates</td><td
 								>{vehicleDetails.realtime.position.lat.toFixed(5)}°N, {vehicleDetails.realtime.position.lng.toFixed(
@@ -105,7 +111,7 @@
 						{#if vehicleMode === 'lightrailcbdandsoutheast'}
 							<th>Coupled</th>
 						{/if}
-						<th>Route</th>
+						<th colspan="2">Route</th>
 						<th>Tracked</th>
 					</tr>
 				</thead>
@@ -125,7 +131,8 @@
 											: trip.vehicle_id) || 'N/A'}</td
 									>
 								{/if}
-								<td>{trip.route_id} to {trip.destination}</td>
+								<td>{trip.route_id}</td>
+								<td>{trip.origin ? `${trip.destination} ` : ''}to {trip.destination}</td>
 								<td
 									>{shortTime(trip.first_seen * 1000)} - {shortTime(trip.last_seen * 1000)} ({secondsToHMS(
 										trip.last_seen - trip.first_seen

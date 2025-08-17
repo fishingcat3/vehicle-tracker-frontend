@@ -157,6 +157,9 @@
 		padding: 0.3rem;
 		border-bottom: 1px solid var(--background-tertiary);
 	}
+	.info-table tr:last-child td {
+		border-bottom: none;
+	}
 	.info-table tr td:first-child {
 		font-weight: bold;
 		text-align: right;

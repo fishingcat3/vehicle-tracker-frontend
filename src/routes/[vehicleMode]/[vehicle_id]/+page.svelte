@@ -131,7 +131,7 @@
 											: trip.vehicle_id) || 'N/A'}</td
 									>
 								{/if}
-								<td>{trip.route_id}</td>
+								<td style="width: 1px;">{trip.route_id}</td>
 								<td>{trip.origin ? `${trip.destination} ` : ''}to {trip.destination}</td>
 								<td
 									>{shortTime(trip.first_seen * 1000)} - {shortTime(trip.last_seen * 1000)} ({secondsToHMS(

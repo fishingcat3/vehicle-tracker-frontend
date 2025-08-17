@@ -50,7 +50,7 @@
 						{/if}
 						<th>Model</th>
 						<th>Route</th>
-						<th>Stop</th>
+						<th>Last Stop</th>
 						<th>Last Seen</th>
 					</tr>
 				</thead>

@@ -52,9 +52,9 @@
 				<h1 class="vehicle-id">{vehicle_id}</h1>
 				<table class="info-table table-container">
 					<tbody>
-						<tr><td>Model</td><td>{vehicleDetails.realtime.model}</td></tr>
+						<tr><td>Model:</td><td>{vehicleDetails.realtime.model}</td></tr>
 						<tr
-							><td>Route</td><td>
+							><td>Route:</td><td>
 								{vehicleDetails.realtime.trip.start_time}
 								{vehicleDetails.realtime.route_id}
 								{#if vehicleDetails.realtime.trip.origin}
@@ -65,18 +65,19 @@
 									to {vehicleDetails.realtime.trip.destination}{/if}
 							</td></tr
 						>
-						<tr><td>Last Stop</td><td>{vehicleDetails.realtime.position.stop_name}</td></tr>
+						<tr><td>Last Stop:</td><td>{vehicleDetails.realtime.position.stop_name}</td></tr>
 						<tr
-							><td>Coordinates</td><td
+							><td>Coordinates:</td><td
 								>{vehicleDetails.realtime.position.lat.toFixed(5)}°N, {vehicleDetails.realtime.position.lng.toFixed(
 									5
 								)}°E</td
 							></tr
 						>
-						<tr><td>Bearing</td><td>{vehicleDetails.realtime.position.dir.toFixed(2)}°</td></tr>
-						<tr><td>Speed</td><td>{vehicleDetails.realtime.position.speed.toFixed(2)} km/h</td></tr>
+						<tr><td>Bearing:</td><td>{vehicleDetails.realtime.position.dir.toFixed(2)}°</td></tr>
+						<tr><td>Speed:</td><td>{vehicleDetails.realtime.position.speed.toFixed(2)} km/h</td></tr
+						>
 						<tr
-							><td>Last Seen</td><td
+							><td>Last Seen:</td><td
 								class={((ts) => (ts < 600 ? 'active' : ts < 86400 ? 'semiactive' : 'inactive'))(
 									Date.now() / 1000 - vehicleDetails.realtime.timestamp
 								)}
@@ -85,7 +86,7 @@
 								({secondsToHMS(Date.now() / 1000 - vehicleDetails.realtime.timestamp)} ago)</td
 							></tr
 						>
-						<tr><td>Last Refresh</td><td>{shortTime(new Date())} (every 90 seconds)</td></tr>
+						<tr><td>Last Refresh:</td><td>{shortTime(new Date())} (every 90 seconds)</td></tr>
 					</tbody>
 				</table>
 				<br />
@@ -153,10 +154,11 @@
 
 <style>
 	.info-table tr td {
-		padding: 0.4rem 2rem 0 0;
+		padding: 0.4rem 0.5rem 0 0;
 	}
 	.info-table tr td:first-child {
 		font-weight: bold;
+		text-align: right;
 	}
 	.details-block {
 		display: flex;

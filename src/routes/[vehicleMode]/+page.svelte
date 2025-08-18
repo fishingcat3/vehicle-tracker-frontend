@@ -15,7 +15,7 @@
 
 	onMount(() => {
 		const interval = setInterval(async () => {
-			if (document.hidden) return;
+			// if (document.hidden) return;
 			vehicleList = await fetchVehicles({ loadFetch: fetch, vehicleMode });
 			elapsed = 0;
 		}, 90000);

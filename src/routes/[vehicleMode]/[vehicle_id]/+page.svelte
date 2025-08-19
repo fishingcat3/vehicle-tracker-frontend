@@ -13,14 +13,14 @@
 	let map, marker;
 
 	async function updateVehicleData(map, marker) {
-		if (!(document.visibilityState === 'visible' && Date.now() - lastUpdate > UPDATE_PERIOD))
-			return;
-		({ vehicleDetails } = await fetchVehicleData({ loadFetch: fetch, vehicleMode, vehicle_id }));
-		let pos = vehicleDetails.realtime.position;
-		map.panTo([pos.lat, pos.lng], { animate: true, duration: 1.5 });
-		marker.setLatLng([pos.lat, pos.lng]);
-		lastUpdate = Date.now();
-		elapsed = 0;
+		if (document.visibilityState === 'visible' && Date.now() - lastUpdate > UPDATE_PERIOD) {
+			({ vehicleDetails } = await fetchVehicleData({ loadFetch: fetch, vehicleMode, vehicle_id }));
+			let pos = vehicleDetails.realtime.position;
+			map.panTo([pos.lat, pos.lng], { animate: true, duration: 1.5 });
+			marker.setLatLng([pos.lat, pos.lng]);
+			lastUpdate = Date.now();
+			elapsed = 0;
+		}
 	}
 
 	onMount(async () => {

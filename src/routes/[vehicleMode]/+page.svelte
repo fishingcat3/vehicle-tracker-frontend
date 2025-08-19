@@ -14,11 +14,11 @@
 	streamed.vehicles.then((resolvedVehicles) => (vehicleList = resolvedVehicles));
 
 	async function updateVehiclesData() {
-		if (!(document.visibilityState === 'visible' && Date.now() - lastUpdate > UPDATE_PERIOD))
-			return;
-		vehicleList = await fetchVehicles({ loadFetch: fetch, vehicleMode });
-		lastUpdate = Date.now();
-		elapsed = 0;
+		if (document.visibilityState === 'visible' && Date.now() - lastUpdate > UPDATE_PERIOD) {
+			vehicleList = await fetchVehicles({ loadFetch: fetch, vehicleMode });
+			lastUpdate = Date.now();
+			elapsed = 0;
+		}
 	}
 
 	onMount(() => {

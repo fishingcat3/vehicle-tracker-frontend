@@ -7,29 +7,43 @@
 	let { vehicleMode, streamed } = data;
 	let vehicleList = [];
 
+	const UPDATE_PERIOD = 90_000;
+	let lastUpdate = Date.now();
 	let elapsed = 0;
 
-	streamed.vehicles.then((resolvedVehicles) => {
-		vehicleList = resolvedVehicles;
-	});
+	streamed.vehicles.then((resolvedVehicles) => (vehicleList = resolvedVehicles));
+
+	async function updateVehiclesData() {
+		if (!(document.visibilityState === 'visible' && Date.now() - lastUpdate > UPDATE_PERIOD))
+			return;
+		vehicleList = await fetchVehicles({ loadFetch: fetch, vehicleMode });
+		lastUpdate = Date.now();
+		elapsed = 0;
+	}
 
 	onMount(() => {
-		const interval = setInterval(async () => {
-			// if (document.hidden) return;
-			vehicleList = await fetchVehicles({ loadFetch: fetch, vehicleMode });
-			elapsed = 0;
-		}, 90000);
+		let interval;
+
+		function startInterval() {
+			interval = setInterval(updateVehiclesData, UPDATE_PERIOD);
+		}
+
+		startInterval();
 		return () => clearInterval(interval);
 	});
 
-	onMount(() => {
-		const id = setInterval(() => {
-			elapsed += 1;
-		}, 1000);
+	function onvisibilitychange() {
+		updateVehiclesData();
+	}
 
-		return () => clearInterval(id);
+	onMount(() => {
+		if (typeof window === 'undefined') return;
+		const i = setInterval(() => (elapsed += 1), 1000);
+		return () => clearInterval(i);
 	});
 </script>
+
+<svelte:document {onvisibilitychange} />
 
 <svelte:head>
 	<title>Vehicles for {vehicleMode}</title>
@@ -37,7 +51,11 @@
 
 <div class="page-container">
 	<h1 class="title">Vehicles for <strong>{vehicleMode}</strong></h1>
-	<p>Automatically refreshes every 90 seconds (last refreshed {secondsToHMS(elapsed)} ago)</p>
+	<p>
+		Automatically refreshes every {secondsToHMS(UPDATE_PERIOD / 1000)} (last refreshed {secondsToHMS(
+			elapsed
+		)} ago)
+	</p>
 	{#await streamed.vehicles}
 		<SkeletonTable />
 	{:then vehicles}

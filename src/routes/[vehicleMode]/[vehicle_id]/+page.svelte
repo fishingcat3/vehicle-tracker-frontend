@@ -6,11 +6,25 @@
 	export let data;
 	let { vehicleMode, vehicle_id, vehicleDetails } = data;
 
+	const UPDATE_PERIOD = 90_000;
+	let lastUpdate = Date.now();
+	let elapsed = 0;
+
+	async function updateVehicleData(map, marker) {
+		if (!(document.visibilityState === 'visible' && Date.now() - lastUpdate > UPDATE_PERIOD))
+			return;
+		({ vehicleDetails } = await fetchVehicleData({ loadFetch: fetch, vehicleMode, vehicle_id }));
+		let pos = vehicleDetails.realtime.position;
+		map.panTo([pos.lat, pos.lng], { animate: true, duration: 1.5 });
+		marker.setLatLng([pos.lat, pos.lng]);
+		lastUpdate = Date.now();
+		elapsed = 0;
+	}
+
 	onMount(async () => {
 		if (typeof window === 'undefined') return;
 
 		let pos = vehicleDetails.realtime.position;
-
 		let map = L.map('map').setView([pos.lat, pos.lng], 13);
 		L.tileLayer(
 			'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}' +
@@ -19,28 +33,42 @@
 				attribution:
 					'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions" target="_blank">CARTO</a>',
 				subdomains: 'abcd',
-				maxZoom: 18,
+				maxZoom: 20,
 				minZoom: 6
 			}
 		).addTo(map);
 		L.tileLayer('https://{s}.tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png', {
 			attribution: `Data <a href="https://www.openstreetmap.org/copyright" target="_blank">© OpenStreetMap contributors</a>, Style: <a href="https://creativecommons.org/licenses/by-sa/2.0/" target="_blank">CC-BY-SA 2.0</a> <a href="https://www.openrailwaymap.org/" target="_blank">OpenRailwayMap</a>`,
 			subdomains: 'abc',
-			maxZoom: 18,
+			maxZoom: 20,
 			minZoom: 6
 		}).addTo(map);
 		let marker = L.marker([pos.lat, pos.lng]).addTo(map);
 
-		const interval = setInterval(async () => {
-			// if (document.hidden) return;
-			({ vehicleDetails } = await fetchVehicleData({ loadFetch: fetch, vehicleMode, vehicle_id }));
-			pos = vehicleDetails.realtime.position;
-			map.panTo([pos.lat, pos.lng], { animate: true, duration: 1.5 });
-			marker.setLatLng([pos.lat, pos.lng]);
-		}, 90000);
+		let interval;
+
+		function startInterval() {
+			interval = setInterval(async () => {
+				await updateVehicleData(map, marker);
+			}, UPDATE_PERIOD);
+		}
+
+		startInterval();
 		return () => clearInterval(interval);
 	});
+
+	function onvisibilitychange() {
+		updateVehicleData(map, marker);
+	}
+
+	onMount(() => {
+		if (typeof window === 'undefined') return;
+		const i = setInterval(() => (elapsed += 1), 1000);
+		return () => clearInterval(i);
+	});
 </script>
+
+<svelte:document {onvisibilitychange} />
 
 <svelte:head>
 	<title>{vehicle_id} {vehicleMode}</title>
@@ -89,7 +117,13 @@
 								({secondsToHMS(Date.now() / 1000 - vehicleDetails.realtime.timestamp)} ago)</td
 							></tr
 						>
-						<tr><td>Last Refresh:</td><td>{shortTime(new Date())} (every 90 seconds)</td></tr>
+						<tr
+							><td>Last Refresh:</td><td
+								>{shortTime(new Date())} (every {secondsToHMS(UPDATE_PERIOD / 1000)}, {secondsToHMS(
+									elapsed
+								)} ago)</td
+							></tr
+						>
 					</tbody>
 				</table>
 				<br />

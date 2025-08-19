@@ -10,6 +10,8 @@
 	let lastUpdate = Date.now();
 	let elapsed = 0;
 
+	let map, marker;
+
 	async function updateVehicleData(map, marker) {
 		if (!(document.visibilityState === 'visible' && Date.now() - lastUpdate > UPDATE_PERIOD))
 			return;
@@ -25,7 +27,7 @@
 		if (typeof window === 'undefined') return;
 
 		let pos = vehicleDetails.realtime.position;
-		let map = L.map('map').setView([pos.lat, pos.lng], 13);
+		map = L.map('map').setView([pos.lat, pos.lng], 13);
 		L.tileLayer(
 			'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}' +
 				(L.Browser.retina ? '@2x.png' : '.png'),
@@ -43,7 +45,7 @@
 			maxZoom: 20,
 			minZoom: 6
 		}).addTo(map);
-		let marker = L.marker([pos.lat, pos.lng]).addTo(map);
+		marker = L.marker([pos.lat, pos.lng]).addTo(map);
 
 		let interval;
 

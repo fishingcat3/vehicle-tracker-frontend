@@ -57,8 +57,8 @@
 </div>
 
 <footer>
-	NSW TrainLink stores up to 90 days of trips and every other mode stores up to 21 days of trips<br
-	/><br />
+	NSW TrainLink stores up to 90 days of trips, Sydney Metro stores 60 days and everything else
+	stores up to 21 days<br /><br />
 	Licensed under
 	<a href="https://opendata.transport.nsw.gov.au/datalicence" target="_blank">CC BY 4.0 by TfNSW</a
 	><br />

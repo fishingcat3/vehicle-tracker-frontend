@@ -10,7 +10,10 @@
 	<button
 		class="accordion-header {isOpen ? 'open' : 'closed'}"
 		type="button"
-		on:click={() => (isOpen = !isOpen)}
+		on:click={() => {
+			isOpen = !isOpen;
+			window.dispatchEvent(new Event('resize'));
+		}}
 	>
 		<span>{title}</span>
 	</button>

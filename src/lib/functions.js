@@ -89,13 +89,12 @@ export async function fetchVehicleData({ loadFetch, vehicleMode, vehicle_id, cur
 		vehicleDetails.trips = [];
 		const tripEntries = Object.entries(dateGroups).sort((a, b) => b[0] - a[0]);
 		for (const [day, trips] of tripEntries) {
-			const dayText = yyyymmddToText(day, 'short');
 			const hoursTracked = secondsToHMS(
 				trips.reduce((acc, x) => acc + x.last_seen - x.first_seen, 0)
 			);
 			vehicleDetails.trips.push({
-				dateHeader: `<strong>${dayText}</strong> (${trips.length} trip${trips.length === 1 ? '' : 's'}, ${hoursTracked} tracked)`,
-				dayText,
+				dateHeader: `<strong>${yyyymmddToText(day, 'long')}</strong> (${trips.length} trip${trips.length === 1 ? '' : 's'}, ${hoursTracked} tracked)`,
+				dayText: yyyymmddToText(day, 'short'),
 				dayTrips: trips.length,
 				dayHoursTracked: hoursTracked,
 				key: day

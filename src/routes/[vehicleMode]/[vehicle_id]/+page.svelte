@@ -1,20 +1,28 @@
 <script>
 	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
 	import SkeletonTable from '$lib/components/SkeletonTable.svelte';
+	import PaginationBar from '$lib/components/PaginationBar.svelte';
 	import Accordion from '$lib/components/Accordion.svelte';
-	import { shortDate, shortTime, shortYear, secondsToHMS, fetchVehicleData } from '$lib/functions';
+	import { shortDate, shortTime, secondsToHMS, fetchVehicleData } from '$lib/functions';
 	export let data;
 	let { vehicleMode, vehicle_id, vehicleDetails } = data;
 
 	const UPDATE_PERIOD = 90_000;
 	let lastUpdate = Date.now();
 	let elapsed = 0;
-
+	let currentPage = $page.url.searchParams.get('page') || 1;
+	let totalPages = 1;
 	let map, marker;
 
 	async function updateVehicleData(map, marker) {
 		if (document.visibilityState === 'visible' && Date.now() - lastUpdate > UPDATE_PERIOD) {
-			({ vehicleDetails } = await fetchVehicleData({ loadFetch: fetch, vehicleMode, vehicle_id }));
+			({ vehicleDetails } = await fetchVehicleData({
+				loadFetch: fetch,
+				vehicleMode,
+				vehicle_id,
+				currentPage
+			}));
 			let pos = vehicleDetails.realtime.position;
 			map.panTo([pos.lat, pos.lng], { animate: true, duration: 1.5 });
 			marker.setLatLng([pos.lat, pos.lng]);
@@ -23,9 +31,16 @@
 		}
 	}
 
+	function handlePageChange(event) {
+		currentPage = event.detail;
+		lastUpdate = 0;
+		updateVehicleData(map, marker);
+	}
+
 	onMount(async () => {
 		if (typeof window === 'undefined') return;
 
+		totalPages = vehicleDetails.total_pages;
 		let pos = vehicleDetails.realtime.position;
 		map = L.map('map').setView([pos.lat, pos.lng], 13);
 		L.tileLayer(
@@ -67,6 +82,16 @@
 		if (typeof window === 'undefined') return;
 		const i = setInterval(() => (elapsed += 1), 1000);
 		return () => clearInterval(i);
+	});
+
+	let navBarHeight = 0;
+	const updateNavBarHeight = () =>
+		(navBarHeight = document.querySelector('nav').offsetHeight || 59);
+
+	onMount(() => {
+		updateNavBarHeight();
+		window.addEventListener('scroll', updateNavBarHeight);
+		return () => window.removeEventListener('scroll', updateNavBarHeight);
 	});
 </script>
 
@@ -130,10 +155,14 @@
 				</table>
 				<br />
 				<Accordion title="Day Summary"
-					>{@html vehicleDetails.trips
-						.filter((x) => x.dateHeader)
-						.map((x) => x.dateHeader)
-						.join('<br />')}</Accordion
+					><table class="info-table">
+						<thead><tr><th>Day</th><th>Trips</th><th>Hours</th></tr></thead>
+						<tbody>
+							{#each vehicleDetails.trips.filter((x) => x.dayText) as day (day.key)}
+								<tr><td>{day.dayText}</td><td>{day.dayTrips}</td><td>{day.dayHoursTracked}</td></tr>
+							{/each}
+						</tbody>
+					</table></Accordion
 				>
 			</div>
 
@@ -142,7 +171,10 @@
 			</div>
 		</div>
 
-		<h2 class="history-title">Trip History</h2>
+		<div class="history-title-container" style="--nav-height: {navBarHeight}px">
+			<h2 class="history-title">Trip History</h2>
+			<PaginationBar {currentPage} {totalPages} on:pageChange={handlePageChange} />
+		</div>
 		<div class="table-container">
 			<table class="vehicle-table">
 				<thead>
@@ -192,7 +224,8 @@
 </div>
 
 <style>
-	.info-table tr td {
+	.info-table tr td,
+	.info-table tr th {
 		padding: 0.3rem;
 		border-bottom: 1px solid var(--background-tertiary);
 	}
@@ -233,11 +266,20 @@
 		line-height: 1.6;
 		margin: 0.2rem 0;
 	}
+	.history-title-container {
+		width: 100%;
+		display: inline-flex;
+		justify-content: space-between;
+		padding: 0;
+		font-weight: 700;
+		padding-top: 1.2rem;
+		padding-bottom: 1rem;
+		position: sticky;
+		background-color: var(--background-primary);
+		top: var(--nav-height);
+	}
 	.history-title {
-		font-size: 1.6rem;
-		font-weight: bold;
-		margin-top: 2rem;
-		margin-bottom: 1.2rem;
+		margin: 0;
 	}
 	@media (max-width: 768px) {
 		#map {

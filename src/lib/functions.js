@@ -26,31 +26,17 @@ export function shortTime(date) {
 	})}`;
 }
 
-export function shortYear(dateString) {
+export function yyyymmddToText(dateString, length = 'short') {
 	const year = parseInt(dateString.substring(0, 4));
 	const month = parseInt(dateString.substring(4, 6)) - 1;
 	const day = parseInt(dateString.substring(6, 8));
 
 	const date = new Date(year, month, day);
 
-	const weekday = date.toLocaleDateString('en-AU', { weekday: 'long' });
+	const weekday = date.toLocaleDateString('en-AU', { weekday: length });
+	const monthName = date.toLocaleDateString('en-AU', { month: length });
 
-	const months = [
-		'January',
-		'February',
-		'March',
-		'April',
-		'May',
-		'June',
-		'July',
-		'August',
-		'September',
-		'October',
-		'November',
-		'December'
-	];
-
-	return `${weekday}, ${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
+	return `${weekday}, ${date.getDate()} ${monthName} ${date.getFullYear()}`;
 }
 
 export function secondsToHMS(i) {
@@ -88,10 +74,10 @@ export async function fetchVehicles({ loadFetch, vehicleMode }) {
 	}
 }
 
-export async function fetchVehicleData({ loadFetch, vehicleMode, vehicle_id }) {
+export async function fetchVehicleData({ loadFetch, vehicleMode, vehicle_id, currentPage }) {
 	try {
 		const response = await loadFetch(
-			`https://gtfs-r-vehicles.up.railway.app/api/vehicle/${vehicleMode}?vehicle_id=${vehicle_id}`
+			`https://gtfs-r-vehicles.up.railway.app/api/vehicle/${vehicleMode}?vehicle_id=${vehicle_id}${currentPage ? `&page=${currentPage}` : ''}`
 		);
 		if (!response.ok) {
 			throw new Error('Network response was not OK');
@@ -103,8 +89,15 @@ export async function fetchVehicleData({ loadFetch, vehicleMode, vehicle_id }) {
 		vehicleDetails.trips = [];
 		const tripEntries = Object.entries(dateGroups).sort((a, b) => b[0] - a[0]);
 		for (const [day, trips] of tripEntries) {
+			const dayText = yyyymmddToText(day, 'short');
+			const hoursTracked = secondsToHMS(
+				trips.reduce((acc, x) => acc + x.last_seen - x.first_seen, 0)
+			);
 			vehicleDetails.trips.push({
-				dateHeader: `<strong>${shortYear(day)}</strong> (${trips.length} trip${trips.length === 1 ? '' : 's'}, ${secondsToHMS(trips.reduce((acc, x) => acc + x.last_seen - x.first_seen, 0))} tracked)`,
+				dateHeader: `<strong>${dayText}</strong> (${trips.length} trip${trips.length === 1 ? '' : 's'}, ${hoursTracked} tracked)`,
+				dayText,
+				dayTrips: trips.length,
+				dayHoursTracked: hoursTracked,
 				key: day
 			});
 			vehicleDetails.trips.push(...trips);

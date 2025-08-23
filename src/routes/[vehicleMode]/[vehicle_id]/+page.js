@@ -1,6 +1,7 @@
 import { fetchVehicleData } from '$lib/functions.js';
 
-export async function load({ fetch: loadFetch, params }) {
+export async function load({ fetch: loadFetch, params, url }) {
 	const { vehicleMode, vehicle_id } = params;
-	return fetchVehicleData({ loadFetch, vehicleMode, vehicle_id });
+	const page = url.searchParams.get('page') || 1;
+	return fetchVehicleData({ loadFetch, vehicleMode, vehicle_id, currentPage: page });
 }

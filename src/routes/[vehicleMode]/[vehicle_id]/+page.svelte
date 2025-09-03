@@ -105,8 +105,8 @@
 			vehicleDetails.realtime.timestamp * 1000
 		)}"
 	/>
-	<meta property="og:site_name" content="({vehicleMode})" />
-	<meta property="og:title" content="{vehicle_id} {vehicleMode}" />
+	<meta property="og:site_name" content="Vehicle Tracker" />
+	<meta property="og:title" content="{vehicle_id} ({vehicleMode})" />
 	<meta
 		property="og:description"
 		content="{vehicleDetails.realtime.model || 'Unknown vehicle model'}, last seen {shortDate(
@@ -119,7 +119,7 @@
 	/>
 	<meta property="og:type" content="website" />
 	<meta name="twitter:card" content="summary" />
-	<meta name="twitter:title" content="{vehicle_id} {vehicleMode}" />
+	<meta name="twitter:title" content="{vehicle_id} ({vehicleMode})" />
 	<meta
 		name="twitter:description"
 		content="{vehicleDetails.realtime.model || 'Unknown vehicle model'}, last seen {shortDate(

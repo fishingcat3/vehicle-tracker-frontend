@@ -40,6 +40,16 @@
 
 <svelte:head>
 	<title>VehicleTracker</title>
+	<meta name="description" content="Track the history of public transport vehicles" />
+	<meta property="og:site_name" content="Vehicle Tracker" />
+	<meta property="og:title" content="Vehicles Tracker" />
+	<meta property="og:description" content="Track the history of public transport vehicles" />
+	<meta property="og:url" content="https://vehicletracker.fishingcat3.com" />
+	<meta property="og:type" content="website" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:title" content="Vehicle Tracker" />
+	<meta name="twitter:description" content="Track the history of public transport vehicles" />
+	<meta name="twitter:url" content="https://vehicletracker.fishingcat3.com" />
 </svelte:head>
 
 <div class="page-container">

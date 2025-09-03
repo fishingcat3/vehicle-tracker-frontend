@@ -99,6 +99,37 @@
 
 <svelte:head>
 	<title>{vehicle_id} {vehicleMode}</title>
+	<meta
+		name="description"
+		content="{vehicleDetails.realtime.model || 'Unknown vehicle model'}, last seen {shortDate(
+			vehicleDetails.realtime.timestamp * 1000
+		)}"
+	/>
+	<meta property="og:site_name" content="({vehicleMode})" />
+	<meta property="og:title" content="{vehicle_id} {vehicleMode}" />
+	<meta
+		property="og:description"
+		content="{vehicleDetails.realtime.model || 'Unknown vehicle model'}, last seen {shortDate(
+			vehicleDetails.realtime.timestamp * 1000
+		)}"
+	/>
+	<meta
+		property="og:url"
+		content="https://vehicletracker.fishingcat3.com/{vehicleMode}/{vehicle_id}"
+	/>
+	<meta property="og:type" content="website" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:title" content="{vehicle_id} {vehicleMode}" />
+	<meta
+		name="twitter:description"
+		content="{vehicleDetails.realtime.model || 'Unknown vehicle model'}, last seen {shortDate(
+			vehicleDetails.realtime.timestamp * 1000
+		)}"
+	/>
+	<meta
+		name="twitter:url"
+		content="https://vehicletracker.fishingcat3.com/{vehicleMode}/{vehicle_id}"
+	/>
 </svelte:head>
 
 <div class="page-container">

@@ -47,6 +47,16 @@
 
 <svelte:head>
 	<title>Vehicles for {vehicleMode}</title>
+	<meta name="description" content="View a list of vehicles for {vehicleMode}" />
+	<meta property="og:site_name" content="Vehicle Tracker" />
+	<meta property="og:title" content="Vehicles for {vehicleMode}" />
+	<meta property="og:description" content="View a list of vehicles for {vehicleMode}" />
+	<meta property="og:url" content="https://vehicletracker.fishingcat3.com/{vehicleMode}" />
+	<meta property="og:type" content="website" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:title" content="Vehicles for {vehicleMode}" />
+	<meta name="twitter:description" content="View a list of vehicles for {vehicleMode}" />
+	<meta name="twitter:url" content="https://vehicletracker.fishingcat3.com/{vehicleMode}" />
 </svelte:head>
 
 <div class="page-container">

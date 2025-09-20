@@ -65,6 +65,9 @@
 		Automatically refreshes every {secondsToHMS(UPDATE_PERIOD / 1000)} (last refreshed {secondsToHMS(
 			elapsed
 		)} ago)
+		{#if vehicleMode === 'adelaidemetro'}
+			<br />Stopped location names may be inaccurate or wrong for Adelaide
+		{/if}
 	</p>
 	{#await streamed.vehicles}
 		<SkeletonTable />

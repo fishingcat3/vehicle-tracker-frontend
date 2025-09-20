@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+
+<url>
+  <loc>https://vehicletracker.fishingcat3.com/</loc>
+  <priority>1.0</priority>
+  <lastmod>2025-09-17T15:55:57+00:00</lastmod>
+</url>
+
+<url>
+  <loc>https://vehicletracker.fishingcat3.com/nswtrains</loc>
+  <priority>0.8</priority>
+  <lastmod>2025-09-17T15:55:57+00:00</lastmod>
+</url>
+
+<url>
+  <loc>https://vehicletracker.fishingcat3.com/metro</loc>
+  <priority>0.8</priority>
+  <lastmod>2025-09-17T15:55:57+00:00</lastmod>
+</url>
+
+<url>
+  <loc>https://vehicletracker.fishingcat3.com/lightrailcbdandsoutheast</loc>
+  <priority>0.8</priority>
+  <lastmod>2025-09-17T15:55:57+00:00</lastmod>
+</url>
+
+<url>
+  <loc>https://vehicletracker.fishingcat3.com/lightrailparramatta</loc>
+  <priority>0.8</priority>
+  <lastmod>2025-09-17T15:55:57+00:00</lastmod>
+</url>
+
+<url>
+  <loc>https://vehicletracker.fishingcat3.com/ferriessydneyferries</loc>
+  <priority>0.8</priority>
+  <lastmod>2025-09-17T15:55:57+00:00</lastmod>
+</url>
+
+<url>
+  <loc>https://vehicletracker.fishingcat3.com/ferriesmff</loc>
+  <priority>0.8</priority>
+  <lastmod>2025-09-17T15:55:57+00:00</lastmod>
+</url>
+
+<url>
+  <loc>https://vehicletracker.fishingcat3.com/adelaidemetro</loc>
+  <priority>0.8</priority>
+  <lastmod>2025-09-17T15:55:57+00:00</lastmod>
+</url>
+
+
+</urlset>

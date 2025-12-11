@@ -60,6 +60,20 @@ export function secondsToHMS(i) {
 	return parts.join(' ');
 }
 
+export async function fetchLocations({ loadFetch }) {
+	try {
+		const response = await loadFetch(
+			`https://non-timetabled-api-production.up.railway.app/api/locations`
+		);
+		if (!response.ok) throw new Error('Network response was not OK');
+		const data = await response.json();
+		return data.results || [];
+	} catch (error) {
+		console.error('Error fetching vehicles:', error);
+		return [];
+	}
+}
+
 export async function fetchVehicles({ loadFetch, vehicleMode }) {
 	try {
 		const response = await loadFetch(

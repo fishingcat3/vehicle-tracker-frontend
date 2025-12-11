@@ -1,6 +1,11 @@
 <script>
 	const vehicleModes = [
 		{
+			path: 'sydneytrains',
+			name: 'Sydney Trains',
+			icon: 'https://upload.wikimedia.org/wikipedia/commons/e/e7/TfNSW_T.svg'
+		},
+		{
 			path: 'nswtrains',
 			name: 'NSW TrainLink',
 			icon: 'https://upload.wikimedia.org/wikipedia/commons/e/e7/TfNSW_T.svg'
@@ -67,9 +72,11 @@
 </div>
 
 <footer>
-	NSW TrainLink stores up to 90 days of trips, Sydney Metro stores 60 days and everything else
-	stores up to 21 days<br />Vehicle Tracker does not guarantee the accuracy of its data,
-	completeness of its data or complete uptime<br /><br />
+	Sydney Trains is for tracking non timetabled, freight, track inspection or heritage train trips <br
+	/>
+	NSW TrainLink stores up to 90 days of trips, Sydney Metro stores 60 days and everything else stores
+	up to 21 days<br />Vehicle Tracker does not guarantee the accuracy of its data, completeness of
+	its data or complete uptime<br /><br />
 	Data licensed under
 	<a href="https://opendata.transport.nsw.gov.au/datalicence" target="_blank">CC BY 4.0 by TfNSW</a
 	><br />

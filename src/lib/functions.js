@@ -60,10 +60,10 @@ export function secondsToHMS(i) {
 	return parts.join(' ');
 }
 
-export async function fetchLocations({ loadFetch }) {
+export async function fetchLocations({ loadFetch, minX, minY, maxX, maxY }) {
 	try {
 		const response = await loadFetch(
-			`https://non-timetabled-api-production.up.railway.app/api/locations`
+			`https://non-timetabled-api-production.up.railway.app/api/locations?minX=${minX}&minY=${minY}&maxX=${maxX}&maxY=${maxY}`
 		);
 		if (!response.ok) throw new Error('Network response was not OK');
 		const data = await response.json();

@@ -7,12 +7,12 @@
 
 	async function updateLocations() {
 		const bounds = map.getBounds();
-		minX = bounds.getWest();
-		minY = bounds.getSouth();
-		maxX = bounds.getEast();
-		maxY = bounds.getNorth();
+		const minX = bounds.getWest();
+		const minY = bounds.getSouth();
+		const maxX = bounds.getEast();
+		const maxY = bounds.getNorth();
 
-		locations = await fetchLocations({ loadFetch: fetch });
+		locations = await fetchLocations({ loadFetch: fetch, minX, minY, maxX, maxY });
 
 		locationsGroup.clearLayers();
 		for (const location of locations) {

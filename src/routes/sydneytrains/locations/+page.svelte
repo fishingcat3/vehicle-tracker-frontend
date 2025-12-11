@@ -23,7 +23,6 @@
 	onMount(async () => {
 		if (typeof window === 'undefined') return;
 
-		let pos = vehicleDetails.realtime.position;
 		map = L.map('map').setView([-33.882653, 151.20598], 13);
 		L.tileLayer(
 			'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}' +
@@ -51,6 +50,10 @@
 		return () => {};
 	});
 </script>
+
+<svelte:head>
+	<title>VehicleTracker Sydney Trains Locations</title>
+</svelte:head>
 
 <div class="page-container">
 	<div id="map">

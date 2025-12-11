@@ -3,7 +3,7 @@
 </svelte:head>
 
 <div class="page-container">
-	<a href="/locations" class="card">
+	<a href="/sydneytrains/locations" class="card">
 		<h2 class="card-title">Sydney Trains GTFS Locations</h2>
 	</a>
 </div>

@@ -42,6 +42,7 @@
 			minZoom: 15
 		}).addTo(map);
 
+		locationsGroup = L.layerGroup([]);
 		locationsGroup.addTo(map);
 
 		updateLocations();

@@ -18,6 +18,7 @@
 		for (const location of locations) {
 			L.marker([location.lat, location.lng]).addTo(locationsGroup);
 		}
+		console.log(locations.length);
 	}
 
 	onMount(async () => {

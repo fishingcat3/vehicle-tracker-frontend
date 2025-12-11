@@ -23,7 +23,7 @@
 	onMount(async () => {
 		if (typeof window === 'undefined') return;
 
-		map = L.map('map').setView([-33.882653, 151.20598], 13);
+		map = L.map('map').setView([-33.882653, 151.20598], 17);
 		L.tileLayer(
 			'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}' +
 				(L.Browser.retina ? '@2x.png' : '.png'),
@@ -32,7 +32,7 @@
 					'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions" target="_blank">CARTO</a>',
 				subdomains: 'abcd',
 				maxZoom: 20,
-				minZoom: 6
+				minZoom: 15
 			}
 		).addTo(map);
 		L.tileLayer('https://{s}.tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png', {

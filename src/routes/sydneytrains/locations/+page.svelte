@@ -1,4 +1,5 @@
 <script>
+	import { onMount } from 'svelte';
 	import { fetchLocations } from '$lib/functions';
 	let locations;
 

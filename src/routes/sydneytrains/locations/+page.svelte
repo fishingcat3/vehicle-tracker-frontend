@@ -33,14 +33,14 @@
 					'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions" target="_blank">CARTO</a>',
 				subdomains: 'abcd',
 				maxZoom: 20,
-				minZoom: 15
+				minZoom: 13
 			}
 		).addTo(map);
 		L.tileLayer('https://{s}.tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png', {
 			attribution: `Data <a href="https://www.openstreetmap.org/copyright" target="_blank">© OpenStreetMap contributors</a>, Style: <a href="https://creativecommons.org/licenses/by-sa/2.0/" target="_blank">CC-BY-SA 2.0</a> <a href="https://www.openrailwaymap.org/" target="_blank">OpenRailwayMap</a>`,
 			subdomains: 'abc',
 			maxZoom: 20,
-			minZoom: 15
+			minZoom: 13
 		}).addTo(map);
 
 		locationsGroup = L.layerGroup([]);
@@ -69,6 +69,6 @@
 		flex: 1;
 		border-radius: 8px;
 		box-shadow: 0 4px 6px var(--box-shadow-10);
-		height: 50vh;
+		height: 80vh;
 	}
 </style>

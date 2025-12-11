@@ -16,7 +16,9 @@
 
 		locationsGroup.clearLayers();
 		for (const location of locations) {
-			L.marker([location.lat, location.lng]).addTo(locationsGroup);
+			L.marker([location.lat, location.lng])
+				.bindPopup(location.location_name)
+				.addTo(locationsGroup);
 		}
 		console.log(locations.length);
 	}
@@ -33,14 +35,14 @@
 					'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>, &copy; <a href="https://carto.com/attributions" target="_blank">CARTO</a>',
 				subdomains: 'abcd',
 				maxZoom: 20,
-				minZoom: 13
+				minZoom: 14
 			}
 		).addTo(map);
 		L.tileLayer('https://{s}.tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png', {
 			attribution: `Data <a href="https://www.openstreetmap.org/copyright" target="_blank">© OpenStreetMap contributors</a>, Style: <a href="https://creativecommons.org/licenses/by-sa/2.0/" target="_blank">CC-BY-SA 2.0</a> <a href="https://www.openrailwaymap.org/" target="_blank">OpenRailwayMap</a>`,
 			subdomains: 'abc',
 			maxZoom: 20,
-			minZoom: 13
+			minZoom: 14
 		}).addTo(map);
 
 		locationsGroup = L.layerGroup([]);

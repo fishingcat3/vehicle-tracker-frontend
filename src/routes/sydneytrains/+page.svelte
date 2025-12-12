@@ -12,4 +12,7 @@
 </main>
 
 <style>
+	.card {
+		display: flex;
+	}
 </style>

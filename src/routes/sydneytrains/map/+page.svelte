@@ -56,7 +56,7 @@
 </script>
 
 <svelte:head>
-	<title>VehicleTracker Sydney Trains Locations</title>
+	<title>GTFS Locations Map</title>
 </svelte:head>
 
 <div class="page-container">
@@ -66,11 +66,16 @@
 </div>
 
 <style>
+	body {
+		display: flex;
+		flex-direction: column;
+	}
+
 	#map {
 		padding: 2rem;
 		flex: 1;
 		border-radius: 8px;
 		box-shadow: 0 4px 6px var(--box-shadow-10);
-		height: 70vh;
+		flex: 1;
 	}
 </style>

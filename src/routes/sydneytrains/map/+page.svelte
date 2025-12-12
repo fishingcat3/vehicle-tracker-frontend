@@ -43,7 +43,9 @@
 	});
 
 	onMount(async () => {
+		console.log('A');
 		if (typeof window === 'undefined') return;
+		console.log('B');
 
 		map = L.map('map').setView([-33.882653, 151.20598], 17);
 		L.tileLayer(

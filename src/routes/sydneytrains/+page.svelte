@@ -2,11 +2,14 @@
 	<title>VehicleTracker Sydney Trains</title>
 </svelte:head>
 
-<div class="page-container">
-	<a href="/sydneytrains/locations" class="card">
-		<h2 class="card-title">Sydney Trains GTFS Locations</h2>
-	</a>
-</div>
+<main>
+	<div class="page-container">
+		<h1 class="title">Tools for <strong>Sydney Trains</strong></h1>
+		<a href="/sydneytrains/map" class="card">
+			<h2 class="card-title">GTFS Locations Map</h2>
+		</a>
+	</div>
+</main>
 
 <style>
 	.card {
@@ -18,6 +21,7 @@
 			transform 0.2s ease-in-out,
 			box-shadow 0.2s ease-in-out;
 		text-align: left;
+		display: flex;
 	}
 	a {
 		display: inline-flex;

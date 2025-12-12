@@ -132,127 +132,133 @@
 	/>
 </svelte:head>
 
-<div class="page-container">
-	{#if vehicleDetails}
-		<div class="details-block">
-			<div class="details-card">
-				<h1 class="vehicle-id">{vehicle_id}</h1>
-				<table class="info-table table-container">
-					<tbody>
-						<tr><td>Model:</td><td>{vehicleDetails.realtime.model}</td></tr>
-						<tr
-							><td>Route:</td><td>
-								{vehicleDetails.realtime.route_id} ({vehicleDetails.realtime.trip.start_time.slice(
-									0,
-									-3
-								)})
-								{#if vehicleDetails.realtime.trip.origin}
-									<br />
-									{vehicleDetails.realtime.trip.origin} to {vehicleDetails.realtime.trip
-										.destination}
-								{:else}
-									to {vehicleDetails.realtime.trip.destination}{/if}
-							</td></tr
-						>
-						<tr><td>Last Stop:</td><td>{vehicleDetails.realtime.position.stop_name}</td></tr>
-						<tr
-							><td>Coordinates:</td><td
-								>{vehicleDetails.realtime.position.lat.toFixed(5)}°N, {vehicleDetails.realtime.position.lng.toFixed(
-									5
-								)}°E</td
-							></tr
-						>
-						<tr><td>Bearing:</td><td>{vehicleDetails.realtime.position.dir.toFixed(2)}°</td></tr>
-						<tr><td>Speed:</td><td>{vehicleDetails.realtime.position.speed.toFixed(2)} km/h</td></tr
-						>
-						<tr
-							><td>Last Seen:</td><td
-								class={((ts) => (ts < 600 ? 'active' : ts < 86400 ? 'semiactive' : 'inactive'))(
-									Date.now() / 1000 - vehicleDetails.realtime.timestamp
-								)}
+<main>
+	<div class="page-container">
+		{#if vehicleDetails}
+			<div class="details-block">
+				<div class="details-card">
+					<h1 class="vehicle-id">{vehicle_id}</h1>
+					<table class="info-table table-container">
+						<tbody>
+							<tr><td>Model:</td><td>{vehicleDetails.realtime.model}</td></tr>
+							<tr
+								><td>Route:</td><td>
+									{vehicleDetails.realtime.route_id} ({vehicleDetails.realtime.trip.start_time.slice(
+										0,
+										-3
+									)})
+									{#if vehicleDetails.realtime.trip.origin}
+										<br />
+										{vehicleDetails.realtime.trip.origin} to {vehicleDetails.realtime.trip
+											.destination}
+									{:else}
+										to {vehicleDetails.realtime.trip.destination}{/if}
+								</td></tr
 							>
-								{shortDate(vehicleDetails.realtime.timestamp * 1000)}
-								({secondsToHMS(Date.now() / 1000 - vehicleDetails.realtime.timestamp)} ago)</td
-							></tr
-						>
-						<tr
-							><td>Last Refresh:</td><td
-								>{shortTime(new Date())} (every {secondsToHMS(UPDATE_PERIOD / 1000)}, {secondsToHMS(
-									elapsed
-								)} ago)</td
-							></tr
-						>
+							<tr><td>Last Stop:</td><td>{vehicleDetails.realtime.position.stop_name}</td></tr>
+							<tr
+								><td>Coordinates:</td><td
+									>{vehicleDetails.realtime.position.lat.toFixed(5)}°N, {vehicleDetails.realtime.position.lng.toFixed(
+										5
+									)}°E</td
+								></tr
+							>
+							<tr><td>Bearing:</td><td>{vehicleDetails.realtime.position.dir.toFixed(2)}°</td></tr>
+							<tr
+								><td>Speed:</td><td>{vehicleDetails.realtime.position.speed.toFixed(2)} km/h</td
+								></tr
+							>
+							<tr
+								><td>Last Seen:</td><td
+									class={((ts) => (ts < 600 ? 'active' : ts < 86400 ? 'semiactive' : 'inactive'))(
+										Date.now() / 1000 - vehicleDetails.realtime.timestamp
+									)}
+								>
+									{shortDate(vehicleDetails.realtime.timestamp * 1000)}
+									({secondsToHMS(Date.now() / 1000 - vehicleDetails.realtime.timestamp)} ago)</td
+								></tr
+							>
+							<tr
+								><td>Last Refresh:</td><td
+									>{shortTime(new Date())} (every {secondsToHMS(UPDATE_PERIOD / 1000)}, {secondsToHMS(
+										elapsed
+									)} ago)</td
+								></tr
+							>
+						</tbody>
+					</table>
+					<br />
+					<Accordion title="Day Summary"
+						><table class="info-table">
+							<thead><tr><th>Day</th><th>Trips</th><th>Hours</th></tr></thead>
+							<tbody>
+								{#each vehicleDetails.trips.filter((x) => x.dayText) as day (day.key)}
+									<tr
+										><td>{day.dayText}</td><td>{day.dayTrips}</td><td>{day.dayHoursTracked}</td></tr
+									>
+								{/each}
+							</tbody>
+						</table></Accordion
+					>
+				</div>
+
+				<div id="map">
+					<svg class="leaflet-attribution-flag"></svg>
+				</div>
+			</div>
+
+			<div class="history-title-container" style="--nav-height: {navBarHeight}px">
+				<h2 class="history-title">Trip History</h2>
+				<PaginationBar {currentPage} {totalPages} on:pageChange={handlePageChange} />
+			</div>
+			<div class="table-container">
+				<table class="vehicle-table">
+					<thead>
+						<tr>
+							<th>Start Time</th>
+							{#if vehicleMode === 'lightrailcbdandsoutheast'}
+								<th>Coupled</th>
+							{/if}
+							<th colspan="2">Route</th>
+							<th>Tracked</th>
+						</tr>
+					</thead>
+					<tbody>
+						{#each vehicleDetails.trips as trip (trip.key)}
+							{#if trip.dateHeader}
+								<tr class="date-header">
+									<td colspan="5">{@html trip.dateHeader}</td>
+								</tr>
+							{:else}
+								<tr>
+									<td>{trip.start_time}</td>
+									{#if vehicleMode === 'lightrailcbdandsoutheast'}
+										<td
+											>{(vehicle_id === trip.vehicle_id
+												? trip.coupled_vehicle_id
+												: trip.vehicle_id) || 'N/A'}</td
+										>
+									{/if}
+									<td style="width: 1px;">{trip.route_id}</td>
+									<td>{trip.origin ? `${trip.origin} ` : ''}to {trip.destination}</td>
+									<td
+										>{shortTime(trip.first_seen * 1000)} - {shortTime(trip.last_seen * 1000)} ({secondsToHMS(
+											trip.last_seen - trip.first_seen
+										)})</td
+									>
+								</tr>{/if}
+						{/each}
 					</tbody>
 				</table>
-				<br />
-				<Accordion title="Day Summary"
-					><table class="info-table">
-						<thead><tr><th>Day</th><th>Trips</th><th>Hours</th></tr></thead>
-						<tbody>
-							{#each vehicleDetails.trips.filter((x) => x.dayText) as day (day.key)}
-								<tr><td>{day.dayText}</td><td>{day.dayTrips}</td><td>{day.dayHoursTracked}</td></tr>
-							{/each}
-						</tbody>
-					</table></Accordion
-				>
 			</div>
-
-			<div id="map">
-				<svg class="leaflet-attribution-flag"></svg>
+		{:else}
+			<div class="details-card">
+				<h1 class="vehicle-id">Vehicle Not Found</h1>
+				<p>Could not retrieve details for vehicle ID {vehicle_id} ({vehicleMode})</p>
 			</div>
-		</div>
-
-		<div class="history-title-container" style="--nav-height: {navBarHeight}px">
-			<h2 class="history-title">Trip History</h2>
-			<PaginationBar {currentPage} {totalPages} on:pageChange={handlePageChange} />
-		</div>
-		<div class="table-container">
-			<table class="vehicle-table">
-				<thead>
-					<tr>
-						<th>Start Time</th>
-						{#if vehicleMode === 'lightrailcbdandsoutheast'}
-							<th>Coupled</th>
-						{/if}
-						<th colspan="2">Route</th>
-						<th>Tracked</th>
-					</tr>
-				</thead>
-				<tbody>
-					{#each vehicleDetails.trips as trip (trip.key)}
-						{#if trip.dateHeader}
-							<tr class="date-header">
-								<td colspan="5">{@html trip.dateHeader}</td>
-							</tr>
-						{:else}
-							<tr>
-								<td>{trip.start_time}</td>
-								{#if vehicleMode === 'lightrailcbdandsoutheast'}
-									<td
-										>{(vehicle_id === trip.vehicle_id
-											? trip.coupled_vehicle_id
-											: trip.vehicle_id) || 'N/A'}</td
-									>
-								{/if}
-								<td style="width: 1px;">{trip.route_id}</td>
-								<td>{trip.origin ? `${trip.origin} ` : ''}to {trip.destination}</td>
-								<td
-									>{shortTime(trip.first_seen * 1000)} - {shortTime(trip.last_seen * 1000)} ({secondsToHMS(
-										trip.last_seen - trip.first_seen
-									)})</td
-								>
-							</tr>{/if}
-					{/each}
-				</tbody>
-			</table>
-		</div>
-	{:else}
-		<div class="details-card">
-			<h1 class="vehicle-id">Vehicle Not Found</h1>
-			<p>Could not retrieve details for vehicle ID {vehicle_id} ({vehicleMode})</p>
-		</div>
-	{/if}
-</div>
+		{/if}
+	</div>
+</main>
 
 <style>
 	.info-table tr td,

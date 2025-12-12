@@ -57,37 +57,40 @@
 	<meta name="twitter:url" content="https://vehicletracker.fishingcat3.com" />
 </svelte:head>
 
-<div class="page-container">
-	<h1 class="title">Select a Transit Mode</h1>
-	<div class="grid-container">
-		{#each vehicleModes as mode}
-			<a href="/{mode.path}" class="card">
-				{#if mode.icon}
-					<img height="25" width="25" src={mode.icon} alt="{mode.name} Roundel" />
-				{/if}
-				<h2 class="card-title">{mode.name}</h2>
-			</a>
-		{/each}
+<main>
+	<div class="page-container">
+		<h1 class="title">Select a Transit Mode</h1>
+		<div class="grid-container">
+			{#each vehicleModes as mode}
+				<a href="/{mode.path}" class="card">
+					{#if mode.icon}
+						<img height="25" width="25" src={mode.icon} alt="{mode.name} Roundel" />
+					{/if}
+					<h2 class="card-title">{mode.name}</h2>
+				</a>
+			{/each}
+		</div>
 	</div>
-</div>
 
-<footer>
-	Sydney Trains is for tracking non timetabled, freight, track inspection or heritage train trips <br
-	/>
-	NSW TrainLink stores up to 90 days of trips, Sydney Metro stores 60 days and everything else stores
-	up to 21 days<br />Vehicle Tracker does not guarantee the accuracy of its data, completeness of
-	its data or complete uptime<br /><br />
-	Data licensed under
-	<a href="https://opendata.transport.nsw.gov.au/datalicence" target="_blank">CC BY 4.0 by TfNSW</a
-	><br />
-	Data licensed under
-	<a href="https://www.adelaidemetro.com.au/developer-info" target="_blank"
-		>CC BY 4.0 by Adelaide Metro</a
-	>
-	<br /><br />
+	<footer>
+		Sydney Trains is for tracking non timetabled, freight, track inspection or heritage train trips <br
+		/>
+		NSW TrainLink stores up to 90 days of trips, Sydney Metro stores 60 days and everything else stores
+		up to 21 days<br />Vehicle Tracker does not guarantee the accuracy of its data, completeness of
+		its data or complete uptime<br /><br />
+		Data licensed under
+		<a href="https://opendata.transport.nsw.gov.au/datalicence" target="_blank"
+			>CC BY 4.0 by TfNSW</a
+		><br />
+		Data licensed under
+		<a href="https://www.adelaidemetro.com.au/developer-info" target="_blank"
+			>CC BY 4.0 by Adelaide Metro</a
+		>
+		<br /><br />
 
-	Visit <a href="https://fishingcat3.com" target="_blank">https://fishingcat3.com</a>
-</footer>
+		Visit <a href="https://fishingcat3.com" target="_blank">https://fishingcat3.com</a>
+	</footer>
+</main>
 
 <style>
 	.title {

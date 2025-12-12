@@ -23,24 +23,24 @@
 		console.log(locations.length);
 	}
 
-	function updateMapHeight() {
-		const pc = document.getElementById('page-container');
-		if (!pc) {
-			document.getElementById('map').style.height = '100vh';
-			return;
-		}
-		const height = pc.getBoundingClientRect().height;
-		document.getElementById('map').style.height = `${height}px`;
-	}
+	// function updateMapHeight() {
+	// 	const pc = document.getElementById('page-container');
+	// 	if (!pc) {
+	// 		document.getElementById('map').style.height = '100vh';
+	// 		return;
+	// 	}
+	// 	const height = pc.getBoundingClientRect().height;
+	// 	document.getElementById('map').style.height = `${height}px`;
+	// }
 
-	onMount(() => {
-		updateMapHeight();
-		const observer = new ResizeObserver(updateMapHeight);
-		observer.observe(document.getElementById('page-container'));
-		return () => {
-			observer.disconnect();
-		};
-	});
+	// onMount(() => {
+	// 	updateMapHeight();
+	// 	const observer = new ResizeObserver(updateMapHeight);
+	// 	observer.observe(document.getElementById('page-container'));
+	// 	return () => {
+	// 		observer.disconnect();
+	// 	};
+	// });
 
 	onMount(async () => {
 		console.log('A');
@@ -87,28 +87,11 @@
 </div>
 
 <style>
-	:global(html, body) {
-		height: 100%;
-	}
-
-	:global(body) {
-		display: flex;
-		flex-direction: column;
-	}
-
-	:global(nav) {
-		flex: 0;
-	}
-
-	:global(.page-container) {
-		flex: 1;
-	}
-
 	#map {
 		padding: 2rem;
 		flex: 1;
 		border-radius: 8px;
 		box-shadow: 0 4px 6px var(--box-shadow-10);
-		height: 100vh;
+		height: 90vh;
 	}
 </style>

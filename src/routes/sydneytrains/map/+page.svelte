@@ -23,22 +23,21 @@
 		console.log(locations.length);
 	}
 
-	// function updateMapHeight() {
-	// 	const nav = document.getElementById('nav');
-	// 	if (!nav) return;
-	// 	const height = nav.getBoundingClientRect().height;
-	// 	console.log(nav.getBoundingClientRect());
-	// 	document.getElementById('map').style.height = `calc(100vh - ${height}px)`;
-	// }
+	function updateMapHeight() {
+		const pc = document.getElementById('page-container');
+		if (!pc) return;
+		const height = pc.getBoundingClientRect().height;
+		document.getElementById('map').style.height = `${height}px`;
+	}
 
-	// onMount(() => {
-	// 	updateMapHeight();
-	// 	const observer = new ResizeObserver(updateMapHeight);
-	// 	observer.observe(document.getElementById('nav'));
-	// 	return () => {
-	// 		observer.disconnect();
-	// 	};
-	// });
+	onMount(() => {
+		updateMapHeight();
+		const observer = new ResizeObserver(updateMapHeight);
+		observer.observe(document.getElementById('page-container'));
+		return () => {
+			observer.disconnect();
+		};
+	});
 
 	onMount(async () => {
 		if (typeof window === 'undefined') return;
@@ -106,6 +105,5 @@
 		flex: 1;
 		border-radius: 8px;
 		box-shadow: 0 4px 6px var(--box-shadow-10);
-		height: 100%;
 	}
 </style>

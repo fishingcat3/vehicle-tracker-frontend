@@ -25,7 +25,10 @@
 
 	function updateMapHeight() {
 		const pc = document.getElementById('page-container');
-		if (!pc) return;
+		if (!pc) {
+			document.getElementById('map').style.height = '100vh';
+			return;
+		}
 		const height = pc.getBoundingClientRect().height;
 		document.getElementById('map').style.height = `${height}px`;
 	}
@@ -82,22 +85,9 @@
 </div>
 
 <style>
-	:global(html) {
+	:global(html, body) {
 		height: 100%;
-	}
-
-	:global(nav) {
-		flex: 0;
-	}
-
-	:global(body) {
 		height: 100%;
-		display: flex;
-		flex-direction: column;
-	}
-
-	.page-container {
-		flex: 1;
 	}
 
 	#map {

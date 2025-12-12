@@ -23,22 +23,22 @@
 		console.log(locations.length);
 	}
 
-	function updateMapHeight() {
-		const nav = document.getElementById('nav');
-		if (!nav) return;
-		const height = nav.getBoundingClientRect().height;
-		console.log(nav.getBoundingClientRect());
-		document.getElementById('map').style.height = `calc(100vh - ${height}px)`;
-	}
+	// function updateMapHeight() {
+	// 	const nav = document.getElementById('nav');
+	// 	if (!nav) return;
+	// 	const height = nav.getBoundingClientRect().height;
+	// 	console.log(nav.getBoundingClientRect());
+	// 	document.getElementById('map').style.height = `calc(100vh - ${height}px)`;
+	// }
 
-	onMount(() => {
-		updateMapHeight();
-		const observer = new ResizeObserver(updateMapHeight);
-		observer.observe(document.getElementById('nav'));
-		return () => {
-			observer.disconnect();
-		};
-	});
+	// onMount(() => {
+	// 	updateMapHeight();
+	// 	const observer = new ResizeObserver(updateMapHeight);
+	// 	observer.observe(document.getElementById('nav'));
+	// 	return () => {
+	// 		observer.disconnect();
+	// 	};
+	// });
 
 	onMount(async () => {
 		if (typeof window === 'undefined') return;
@@ -83,11 +83,20 @@
 </div>
 
 <style>
+	nav {
+		flex: 0;
+	}
+
 	#map {
 		padding: 2rem;
 		flex: 1;
 		border-radius: 8px;
 		box-shadow: 0 4px 6px var(--box-shadow-10);
-		height: calc(100vh - 123px);
+		flex: 1;
+	}
+
+	body {
+		display: flex;
+		flex-direction: column;
 	}
 </style>

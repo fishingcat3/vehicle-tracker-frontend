@@ -83,7 +83,7 @@
 </div>
 
 <style>
-	nav {
+	:global(nav) {
 		flex: 0;
 	}
 
@@ -95,7 +95,7 @@
 		flex: 1;
 	}
 
-	body {
+	:global(body) {
 		display: flex;
 		flex-direction: column;
 	}

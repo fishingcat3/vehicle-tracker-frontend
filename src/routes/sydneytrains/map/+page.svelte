@@ -71,6 +71,6 @@
 		flex: 1;
 		border-radius: 8px;
 		box-shadow: 0 4px 6px var(--box-shadow-10);
-		height: 80vh;
+		height: 70vh;
 	}
 </style>

@@ -122,11 +122,3 @@
 		{/await}
 	</div>
 </main>
-
-<style>
-	.title {
-		font-size: 2rem;
-		font-weight: 500;
-		margin-bottom: 1.5rem;
-	}
-</style>

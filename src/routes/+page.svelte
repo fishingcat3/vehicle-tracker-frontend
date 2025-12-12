@@ -103,29 +103,6 @@
 		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 		gap: 1rem;
 	}
-	.card {
-		background-color: var(--background-secondary);
-		padding: 1.5rem;
-		border-radius: 8px;
-		box-shadow: 0 4px 6px var(--box-shadow-10);
-		transition:
-			transform 0.2s ease-in-out,
-			box-shadow 0.2s ease-in-out;
-		text-align: left;
-	}
-	a {
-		display: inline-flex;
-		gap: 10px;
-	}
-	.card:hover {
-		transform: translateY(-5px);
-		box-shadow: 0 8px 12px var(--box-shadow-15);
-	}
-	.card-title {
-		font-size: 1.25rem;
-		font-weight: 600;
-		margin: 0;
-	}
 	footer {
 		background-color: var(--background-secondary);
 		padding: 1rem;

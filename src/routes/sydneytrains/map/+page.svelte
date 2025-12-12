@@ -66,19 +66,11 @@
 </div>
 
 <style>
-	body {
-		display: flex;
-		flex-direction: column;
-	}
-
 	#map {
 		padding: 2rem;
 		flex: 1;
 		border-radius: 8px;
 		box-shadow: 0 4px 6px var(--box-shadow-10);
-	}
-
-	.page-container {
-		flex: 1;
+		height: calc(100vh - 59px);
 	}
 </style>

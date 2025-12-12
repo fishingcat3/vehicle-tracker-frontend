@@ -87,7 +87,19 @@
 <style>
 	:global(html, body) {
 		height: 100%;
-		height: 100%;
+	}
+
+	:global(body) {
+		display: flex;
+		flex-direction: column;
+	}
+
+	:global(nav) {
+		flex: 0;
+	}
+
+	:global(.page-container) {
+		flex: 1;
 	}
 
 	#map {
@@ -95,5 +107,6 @@
 		flex: 1;
 		border-radius: 8px;
 		box-shadow: 0 4px 6px var(--box-shadow-10);
+		height: 100vh;
 	}
 </style>

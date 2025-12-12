@@ -27,6 +27,7 @@
 		const nav = document.getElementById('nav');
 		if (!nav) return;
 		const height = nav.getBoundingClientRect().height;
+		console.log(nav.getBoundingClientRect());
 		document.getElementById('map').style.height = `calc(100vh - ${height}px)`;
 	}
 

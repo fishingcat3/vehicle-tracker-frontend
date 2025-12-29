@@ -30,7 +30,7 @@
 
 		locationsGroup.clearLayers();
 
-		for (const { lat, lng, location_names } of locationMarkers) {
+		for (const { lat, lng, location_names } of Object.values(locationMarkers)) {
 			L.marker([lat, lng]).bindPopup(location_names.join('\n')).addTo(locationsGroup);
 		}
 
@@ -57,9 +57,7 @@
 	// });
 
 	onMount(async () => {
-		console.log('A');
 		if (typeof window === 'undefined') return;
-		console.log('B');
 
 		map = L.map('map').setView([-33.882653, 151.20598], 17);
 		L.tileLayer(

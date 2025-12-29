@@ -14,12 +14,26 @@
 
 		locations = await fetchLocations({ loadFetch: fetch, minX, minY, maxX, maxY });
 
-		locationsGroup.clearLayers();
-		for (const location of locations) {
-			L.marker([location.lat, location.lng])
-				.bindPopup(location.location_name)
-				.addTo(locationsGroup);
+		const locationMarkers = {};
+
+		for (const { lat, lng, location_name } of locations) {
+			if (`${lat},${lng}` in locationMarkers) {
+				locationMarkers[`${lat},${lng}`].location_names.push(location_name);
+			} else {
+				locationMarkers[`${lat},${lng}`] = {
+					lat,
+					lng,
+					location_names: [location_name]
+				};
+			}
 		}
+
+		locationsGroup.clearLayers();
+
+		for (const { lat, lng, location_names } of locationMarkers) {
+			L.marker([lat, lng]).bindPopup(location_names.join('\n')).addTo(locationsGroup);
+		}
+
 		console.log(locations.length);
 	}
 

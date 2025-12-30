@@ -117,13 +117,14 @@
 		width: 75px;
 		height: 75px;
 		border-radius: 50%;
+		background-color: #ff1414 !important;
 	}
 
 	:global(.marker.station) {
-		background-color: #ff1414;
+		background-color: #ff1414 !important;
 	}
 
 	:global(.marker.location) {
-		background-color: #006eff;
+		background-color: #006eff !important;
 	}
 </style>

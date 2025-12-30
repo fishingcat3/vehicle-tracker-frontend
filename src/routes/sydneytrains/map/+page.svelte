@@ -16,22 +16,30 @@
 
 		const locationMarkers = {};
 
-		for (const { lat, lng, location_name } of locations) {
-			if (`${lat},${lng}` in locationMarkers) {
-				locationMarkers[`${lat},${lng}`].location_names.push(location_name);
+		for (const { lat, lng, location_name, name, platform } of locations) {
+			const x = name ?? `${lat},${lng}`;
+			if (x in locationMarkers) {
+				locationMarkers[x].location_names.push({ location_name, name, platform });
 			} else {
-				locationMarkers[`${lat},${lng}`] = {
-					lat,
-					lng,
-					location_names: [location_name]
-				};
+				locationMarkers[x] = { lat, lng, location_names: [{ location_name, name, platform }] };
 			}
 		}
 
 		locationsGroup.clearLayers();
 
 		for (const { lat, lng, location_names } of Object.values(locationMarkers)) {
-			L.marker([lat, lng]).bindPopup(location_names.join('\n')).addTo(locationsGroup);
+			const icon = location_names[0].name
+				? L.divIcon({ className: '', html: 'Station' })
+				: L.divIcon({ className: '', html: 'Not' });
+			L.marker([lat, lng], { icon })
+				.bindPopup(
+					location_names
+						.map(({ location_name, name, platform }) =>
+							name ? `${name} ${platform}` : location_name
+						)
+						.join(', ')
+				)
+				.addTo(locationsGroup);
 		}
 
 		console.log(locations.length);

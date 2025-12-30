@@ -30,8 +30,8 @@
 		for (const { lat, lng, location_names } of Object.values(locationMarkers)) {
 			console.log(location_names);
 			const icon = location_names[0].name
-				? L.divIcon({ className: 'marker', html: 'Station' })
-				: L.divIcon({ className: 'marker', html: 'Not' });
+				? L.divIcon({ className: 'marker station', html: '' })
+				: L.divIcon({ className: 'marker location', html: '' });
 
 			const markerContent = location_names
 				.map(({ location_name, name, platform }) => (name ? `${name} ${platform}` : location_name))
@@ -118,5 +118,13 @@
 		height: 50px;
 		border-radius: 50%;
 		background-color: red;
+
+		:global(.station) {
+			background-color: red;
+		}
+
+		:global(.location) {
+			background-color: blue;
+		}
 	}
 </style>

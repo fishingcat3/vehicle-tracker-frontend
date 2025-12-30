@@ -28,16 +28,25 @@
 		locationsGroup.clearLayers();
 
 		for (const { lat, lng, location_names } of Object.values(locationMarkers)) {
+			if (location_names[0]?.name) {
+				const icon = L.divIcon({ className: 'marker station', html: '' });
+				const markerContent = location_names
+					.map(({ name, platform }) => `${name} ${platform}`)
+					.join(', ');
+
+				L.marker([lat, lng], { icon, zIndexOffset: 1000 })
+					.bindPopup(markerContent)
+					.addTo(locationsGroup);
+			} else {
+				const icon = L.divIcon({ className: 'marker location', html: '' });
+				const markerContent = location_names.map(({ location_name }) => location_name).join(', ');
+
+				L.marker([lat, lng], { icon, zIndexOffset: 0 })
+					.bindPopup(markerContent)
+					.addTo(locationsGroup);
+			}
+
 			console.log(location_names);
-			const icon = location_names[0].name
-				? L.divIcon({ className: 'marker station', html: '' })
-				: L.divIcon({ className: 'marker location', html: '' });
-
-			const markerContent = location_names
-				.map(({ location_name, name, platform }) => (name ? `${name} ${platform}` : location_name))
-				.join(', ');
-
-			L.marker([lat, lng], { icon }).bindPopup(markerContent).addTo(locationsGroup);
 		}
 
 		console.log(locations.length);
@@ -117,25 +126,17 @@
 		width: 75px;
 		height: 75px;
 		border-radius: 50%;
-
-		:global(.station) {
-			width: 100px;
-			height: 100px;
-			background-color: #ff1414 !important;
-		}
-
-		:global(.location) {
-			width: 50px;
-			height: 50px;
-			background-color: #006eff !important;
-		}
 	}
 
-	/* :global(.marker.station) {
+	:global(.marker.station) {
+		width: 100px;
+		height: 100px;
 		background-color: #ff1414 !important;
 	}
 
 	:global(.marker.location) {
+		width: 50px;
+		height: 50px;
 		background-color: #006eff !important;
-	} */
+	}
 </style>

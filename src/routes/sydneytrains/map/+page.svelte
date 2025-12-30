@@ -28,18 +28,16 @@
 		locationsGroup.clearLayers();
 
 		for (const { lat, lng, location_names } of Object.values(locationMarkers)) {
+			console.log(location_names);
 			const icon = location_names[0].name
-				? L.divIcon({ className: '', html: 'Station' })
-				: L.divIcon({ className: '', html: 'Not' });
-			L.marker([lat, lng], { icon })
-				.bindPopup(
-					location_names
-						.map(({ location_name, name, platform }) =>
-							name ? `${name} ${platform}` : location_name
-						)
-						.join(', ')
-				)
-				.addTo(locationsGroup);
+				? L.divIcon({ className: 'marker', html: 'Station' })
+				: L.divIcon({ className: 'marker', html: 'Not' });
+
+			const markerContent = location_names
+				.map(({ location_name, name, platform }) => (name ? `${name} ${platform}` : location_name))
+				.join(', ');
+
+			L.marker([lat, lng], { icon }).bindPopup(markerContent).addTo(locationsGroup);
 		}
 
 		console.log(locations.length);
@@ -113,5 +111,11 @@
 		border-radius: 8px;
 		box-shadow: 0 4px 6px var(--box-shadow-10);
 		height: 90vh;
+	}
+
+	:global(.marker) {
+		width: 20px;
+		height: 20px;
+		background-color: white;
 	}
 </style>

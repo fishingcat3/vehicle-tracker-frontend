@@ -117,14 +117,13 @@
 		width: 50px;
 		height: 50px;
 		border-radius: 50%;
-		background-color: red;
 
 		:global(.station) {
-			background-color: red;
+			background-color: #ff1414;
 		}
 
 		:global(.location) {
-			background-color: blue;
+			background-color: #006eff;
 		}
 	}
 </style>

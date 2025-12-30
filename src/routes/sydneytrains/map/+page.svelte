@@ -114,8 +114,9 @@
 	}
 
 	:global(.marker) {
-		width: 20px;
-		height: 20px;
-		background-color: white;
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		background-color: red;
 	}
 </style>

@@ -114,8 +114,8 @@
 	}
 
 	:global(.marker) {
-		width: 50px;
-		height: 50px;
+		width: 75px;
+		height: 75px;
 		border-radius: 50%;
 
 		:global(.station) {

@@ -31,7 +31,7 @@
 			if (location_names[0]?.name) {
 				const icon = L.divIcon({ className: 'marker station', html: '' });
 				const markerContent = location_names
-					.map(({ name, platform }) => `${name} ${platform}`)
+					.map(({ name, platform, location_name }) => `${location_name} (${name} ${platform})`)
 					.join(', ');
 
 				L.marker([lat, lng], { icon, zIndexOffset: 1000 })

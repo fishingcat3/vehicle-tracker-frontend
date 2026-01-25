@@ -34,9 +34,7 @@
 					.map(({ name, platform, location_name }) => `${location_name} (${name} ${platform})`)
 					.join(', ');
 
-				L.marker([lat, lng], { icon, zIndexOffset: 1000 })
-					.bindPopup(markerContent)
-					.addTo(locationsGroup);
+				L.marker([lat, lng], { icon, zIndexOffset: 1000 }).addTo(locationsGroup);
 			} else {
 				const icon = L.divIcon({ className: 'marker location', html: '' });
 				const markerContent = location_names.map(({ location_name }) => location_name).join(', ');
@@ -45,11 +43,7 @@
 					.bindPopup(markerContent)
 					.addTo(locationsGroup);
 			}
-
-			console.log(location_names);
 		}
-
-		console.log(locations.length);
 	}
 
 	// function updateMapHeight() {
@@ -129,9 +123,9 @@
 	}
 
 	:global(.marker.station) {
-		width: 100px;
-		height: 100px;
-		background-color: #ff1414 !important;
+		width: 150px;
+		height: 150px;
+		background-color: #f0393980 !important;
 	}
 
 	:global(.marker.location) {

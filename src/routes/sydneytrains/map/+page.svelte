@@ -17,11 +17,14 @@
 		const locationMarkers = {};
 
 		for (const { lat, lng, location_name, name, platform } of locations) {
-			const x = name ?? `${lat},${lng}`;
-			if (x in locationMarkers) {
-				locationMarkers[x].location_names.push({ location_name, name, platform });
+			if (name in locationMarkers) {
+				locationMarkers[name].location_names.push({ location_name, name, platform });
 			}
-			locationMarkers[x] = { lat, lng, location_names: [{ location_name, name, platform }] };
+			locationMarkers[`${lat},${lng}`] = {
+				lat,
+				lng,
+				location_names: [{ location_name, name, platform }]
+			};
 		}
 
 		locationsGroup.clearLayers();

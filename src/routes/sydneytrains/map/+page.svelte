@@ -20,9 +20,8 @@
 			const x = name ?? `${lat},${lng}`;
 			if (x in locationMarkers) {
 				locationMarkers[x].location_names.push({ location_name, name, platform });
-			} else {
-				locationMarkers[x] = { lat, lng, location_names: [{ location_name, name, platform }] };
 			}
+			locationMarkers[x] = { lat, lng, location_names: [{ location_name, name, platform }] };
 		}
 
 		locationsGroup.clearLayers();
@@ -123,9 +122,9 @@
 	}
 
 	:global(.marker.station) {
-		width: 150px;
-		height: 150px;
-		background-color: #f0393980 !important;
+		width: 200px;
+		height: 200px;
+		background-color: #f2424280 !important;
 	}
 
 	:global(.marker.location) {

@@ -17,18 +17,10 @@
 		const locationMarkers = {};
 
 		for (const { lat, lng, location_name, name, platform } of locations) {
-			const c = `${lat},${lng}`;
-			const x = name ?? c;
+			const x = `${lat},${lng}`;
 			const payload = { location_name, name, platform };
 			if (x in locationMarkers) {
 				locationMarkers[x].location_names.push(payload);
-				if (name) {
-					if (c in locationMarkers) {
-						locationMarkers[c].location_names.push({ ...payload, s: true });
-					} else {
-						locationMarkers[c] = { lat, lng, location_names: [{ ...payload, s: true }] };
-					}
-				}
 			} else {
 				locationMarkers[x] = { lat, lng, location_names: [payload] };
 			}
@@ -37,21 +29,25 @@
 		locationsGroup.clearLayers();
 
 		for (const { lat, lng, location_names } of Object.values(locationMarkers)) {
-			if (location_names[0]?.name && !location_names[0]?.s) {
-				const icon = L.divIcon({ className: 'marker station', html: '' });
-				const markerContent = location_names
-					.map(({ name, platform, location_name }) => `${location_name} (${name} ${platform})`)
-					.join(', ');
+			// if (location_names[0]?.name) {
+			// 	const icon = L.divIcon({ className: 'marker station', html: '' });
+			// 	const markerContent = location_names
+			// 		.map(({ name, platform, location_name }) => `${location_name} (${name} ${platform})`)
+			// 		.join(', ');
 
-				L.marker([lat, lng], { icon, zIndexOffset: 1000 }).addTo(locationsGroup);
-			} else {
-				const icon = L.divIcon({ className: 'marker location', html: '' });
-				const markerContent = location_names.map(({ location_name }) => location_name).join(', ');
+			// 	L.marker([lat, lng], { icon, zIndexOffset: 1000 }).addTo(locationsGroup);
+			// } else {
+			const icon = L.divIcon({ className: 'marker location', html: '' });
+			const markerContent = location_names
+				.map(({ name, platform, location_name }) =>
+					location_name + name ? `(${name} ${platform})` : ''
+				)
+				.join(', ');
 
-				L.marker([lat, lng], { icon, zIndexOffset: 0 })
-					.bindPopup(markerContent)
-					.addTo(locationsGroup);
-			}
+			L.marker([lat, lng], { icon, zIndexOffset: 0 })
+				.bindPopup(markerContent)
+				.addTo(locationsGroup);
+			// }
 		}
 	}
 

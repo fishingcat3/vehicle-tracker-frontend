@@ -39,8 +39,9 @@
 			// } else {
 			const icon = L.divIcon({ className: 'marker location', html: '' });
 			const markerContent = location_names
-				.map(({ name, platform, location_name }) =>
-					location_name + name ? `(${name} ${platform})` : ''
+				.map(
+					({ name, platform, location_name }) =>
+						location_name + (name ? `(${name} ${platform})` : '')
 				)
 				.join(', ');
 

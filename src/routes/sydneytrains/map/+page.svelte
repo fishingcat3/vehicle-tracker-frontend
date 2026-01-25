@@ -24,7 +24,7 @@
 				locationMarkers[x].location_names.push(payload);
 				if (name) {
 					if (c in locationMarkers) {
-						locationMarkers[c].push({ payload });
+						locationMarkers[c].location_names.push({ payload });
 					} else {
 						locationMarkers[c] = { lat, lng, location_names: [payload] };
 					}

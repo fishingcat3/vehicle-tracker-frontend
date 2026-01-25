@@ -24,9 +24,9 @@
 				locationMarkers[x].location_names.push(payload);
 				if (name) {
 					if (c in locationMarkers) {
-						locationMarkers[c].location_names.push({ payload });
+						locationMarkers[c].location_names.push({ ...payload, s: true });
 					} else {
-						locationMarkers[c] = { lat, lng, location_names: [payload] };
+						locationMarkers[c] = { lat, lng, location_names: [{ ...payload, s: true }] };
 					}
 				}
 			} else {
@@ -37,7 +37,7 @@
 		locationsGroup.clearLayers();
 
 		for (const { lat, lng, location_names } of Object.values(locationMarkers)) {
-			if (location_names[0]?.name) {
+			if (location_names[0]?.name && !location_names[0]?.s) {
 				const icon = L.divIcon({ className: 'marker station', html: '' });
 				const markerContent = location_names
 					.map(({ name, platform, location_name }) => `${location_name} (${name} ${platform})`)

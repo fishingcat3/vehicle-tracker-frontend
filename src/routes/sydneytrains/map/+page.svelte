@@ -41,7 +41,7 @@
 			const markerContent = location_names
 				.map(
 					({ name, platform, location_name }) =>
-						location_name + (name ? `(${name} ${platform})` : '')
+						location_name + (name ? ` (${name} ${platform})` : '')
 				)
 				.join(', ');
 

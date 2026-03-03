@@ -35,11 +35,6 @@
 			name: 'Manly Fast Ferry',
 			icon: 'https://assets.myfastferry.com.au/images/2019/12/26221058/cropped-fast_ferry_icon-32x32.png'
 		},
-		{
-			path: 'adelaidemetro',
-			name: 'Adelaide Metro',
-			icon: 'https://www.adelaidemetro.com.au/__data/assets/image/0005/813623/favicon-2.png'
-		}
 	];
 </script>
 
@@ -82,10 +77,6 @@
 		<a href="https://opendata.transport.nsw.gov.au/datalicence" target="_blank"
 			>CC BY 4.0 by TfNSW</a
 		><br />
-		Data licensed under
-		<a href="https://www.adelaidemetro.com.au/developer-info" target="_blank"
-			>CC BY 4.0 by Adelaide Metro</a
-		>
 		<br /><br />
 
 		Visit <a href="https://fishingcat3.com" target="_blank">https://fishingcat3.com</a>
